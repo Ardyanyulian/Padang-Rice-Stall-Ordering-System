@@ -1,0 +1,24 @@
+==========WAJIB DIBACA WOK==========
+
+
+path : menu_display/logic 
+Fungsi : ini untuk membuat semua file logika 
+seperti : class, for , while , dan lain-lain
+
+path : menu_display/static/menu_display/css
+fungsi : ini untuk menaruh frontendnya saja
+
+path : menu_display/templates/menu_display
+fungsi itu semua file html ditaruh disana
+
+=======PENTING UNTUK RUNNING========
+pakai ini di terminalmu:
+
+python3 manage.py runserver
+atau
+python manage.py runserver
+
+======WAJIB DICOBA=========
+http://127.0.0.1:8000/daftarmenu/
+http://127.0.0.1:8000/about/
+http://127.0.0.1:8000/

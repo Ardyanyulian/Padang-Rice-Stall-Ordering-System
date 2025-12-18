@@ -1,0 +1,100 @@
+===============SECARA MANUAL=============== 
+
+
+==========================Daftarkan folder apps============================================
+File: order_core/settings.py
+Aksi: Tambahkan nama aplikasi ke INSTALLED_APPS.
+
+file = order_core/settings.py
+INSTALLED_APPS = [
+    # ...
+    'menu_display', # <-- Wajib!
+    'folder-nama' <-- contoh
+]
+
+
+
+
+=====================Router Utama (urls.py Proyek)============================
+File: order_core/urls.py
+Aksi: Gunakan include untuk memasukkan URL aplikasi.
+
+
+
+=====================Logika Aplikasi (menu_display) (PENTINGGG !!!!)============
+Note: menu_display itu adalah nama folder atau aplikasi
+
+=====================Logika (Views)========================
+File: menu_display/views.py
+Aksi: Buat fungsi, siapkan data dalam context (Dictionary), lalu gunakan render().
+
+
+file : menu_display/views.py
+from django.shortcuts import render
+
+// cukup buat fungsi yang return render(request, 'path', variabel yang dikirim)
+def tampilkan_menu(request):
+    data = [{"nama": "Ayam Pop", "harga": 22000}]
+    # Context: Kurir pembawa data
+    context = {
+        'judul': "Daftar Menu",
+        'daftar_item': data,
+    }
+    # Panggil template, hilangkan 'templates/' dari path string.
+    return render(request, 'menu_display/menu.html', context)
+===================================================
+
+
+
+=====================Router Aplikasi (urls.py Aplikasi)======================
+
+File: menu_display/urls.py
+Aksi: Tentukan path dan beri name (alias) untuk referensi fleksibel di Template.
+
+file =  menu_display/urls.py
+from django.urls import path
+from . import views 
+
+urlpatterns = [
+    path('', views.tampilkan_menu, name='daftar_menu'), # URL utama aplikasi ('/')
+]
+
+Note : disini views.tampilkan_menu itu di sesuiakan
+       dengan nama fungsi yang kamu buat di menu_display/views.py
+
+       untuk '' itu adalah url di browser kamu bisa 
+       bisa bikin 'about/' atau apapun
+
+       name='daftar_menu' itu digunakan  untuk
+       membuat url di html misal 
+       <a href="{% url 'index' %}">Home</a>
+       ini nanti akan membuka file index.html
+===================================================
+
+
+
+====================Tampilan (Template/HTML)=========================
+
+Struktur Folder Wajib: menu_display/templates/menu_display/menu.html
+
+Aksi: Gunakan Template Tag ({% ... %}) untuk logika 
+      (loop, if/else) dan Template Variabel 
+      ({{ ... }}) untuk menampilkan data.
+
+contoh di file nama_file.html :
+
+<h1>{{ judul }}</h1> {% for item in daftar_item %}
+    <p>{{ item.nama }} - Rp. {{ item.harga }}</p>
+{% endfor %}
+
+<a href="{% url 'daftar_menu' %}">Kembali</a> 
+===================================================
+
+
+===================================================================
+Istilah	Fungsi =
+context	 = Dictionary Python yang membawa data dari View ke Template.
+render() = Fungsi di views.py yang menggabungkan request, context, dan file HTML.
+{% ... %} = Template Tag: Digunakan untuk logika (perulangan, kondisi, load).
+{{ ... }} = Template Variable: Digunakan untuk menampilkan isi variabel dari context.
+name='...' = Alias di urls.py, memungkinkan pemanggilan URL yang fleksibel menggunakan {% url '...' %}.

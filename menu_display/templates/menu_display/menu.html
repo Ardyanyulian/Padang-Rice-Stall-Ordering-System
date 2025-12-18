@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ judul_halaman }}</title>
+    <style>
+        /* CSS Sementara Langsung di sini */
+        body { font-family: sans-serif; background-color: #f0f0f0; }
+        h1 { color: #A52A2A; text-align: center; }
+        .menu-item { border: 1px solid #ccc; padding: 15px; margin: 10px; background-color: white; border-radius: 5px; }
+        .harga { font-weight: bold; color: green; }
+        .sold-out { color: red; font-style: italic; }
+    </style>
+</head>
+<body>
+    <h1>
+        <a href="{% url 'index' %}">Home</a>
+    </h1>
+    <h1>{{ nama_warung }} - {{ judul_halaman }}</h1>
+
+    {% for item in daftar_item %}
+    <div class="menu-item">
+        <h2>{{ item.nama }}</h2>
+        <p class="harga">Harga: Rp. {{ item.harga | floatformat:0 }}</p>
+
+        {% if item.tersedia %}
+            <p>Status: **Siap Dipesan**</p>
+        {% else %}
+            <p class="sold-out">Status: **Sold Out**</p>
+        {% endif %}
+
+    </div>
+    {% endfor %}
+
+</body>
+</html>
