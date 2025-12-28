@@ -30,7 +30,7 @@ def tampilkan_index(request):
     }
     
 
-    return render(request, 'menu_display/index.html', context)
+    return render(request, 'menu_display/dasboard.html', context)
 
 
 def tampilkan_about(request):
