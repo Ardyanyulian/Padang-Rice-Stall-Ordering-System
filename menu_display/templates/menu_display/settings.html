@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Warung Management - Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+<script>
+    (function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        const htmlElement = document.documentElement;
+        if (savedTheme === 'dark') {
+            htmlElement.classList.add('dark');
+        } else if (savedTheme === 'system') {
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                htmlElement.classList.add('dark');
+            }
+        } else {
+            htmlElement.classList.remove('dark');
+        }
+    })();
+</script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-white font-display">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#f0f2f4] dark:border-[#2a3441] bg-white dark:bg-[#1a2632] px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-4 text-[#111418] dark:text-white">
+<div class="size-8 text-primary">
+<svg class="size-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-[#111418] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Warung Management</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<div class="hidden md:flex items-center gap-9">
+<a class="text-[#111418] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="{% url 'dashboard' %}">Dashboard</a>
+<a class="text-[#111418] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="{% url 'gudang' %}">Gudang</a>
+<a class="text-[#111418] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="{% url 'transaksi' %}">Transaksi</a>
+<a class="textSales</a>
+<a class="text-primary text-sm font-bold leading-normal" href="{% url 'settings' %}">Pengaturan</a>
+</div>
+<!-- <div class="flex gap-2 items-center">
+<button class="flex items-center justify-center overflow-hidden rounded-lg size-10 bg-[#f0f2f4] dark:bg-[#2a3441] text-[#111418] dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="flex items-center justify-center overflow-hidden rounded-lg size-10 bg-[#f0f2f4] dark:bg-[#2a3441] text-[#111418] dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">chat_bubble</span>
+</button> -->
+<a href="{% url 'profile' %}">
+<div class="user-avatar-target bg-center bg-no-repeat bg-cover rounded-full size-10 ml-2 border border-gray-200 dark:border-gray-700 cursor-pointer" data-alt="User profile avatar showing a smiling person" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAOw-SdBT3DkoTrC6ENQ_k8pKEh3ZJ4WKNE3T6gSdFJ3gSFAwjlETwbwd8dzU6zMJgwd6n8Bqq6k1qIjIxqgPALUBVg7Cd1uhyQaxm1RC4xPP29YuakwA5WiHXxUIwA9_8jDxZJWVl8LHjFZLBI0NV5i-OeGK8u2Q-o75sL9g18FCWvZfytSTnEEA-9pk2RRDToxtPWcytmfAc_w85KfMuNEP0kZNciMiRlKDexAFvD3PKA0fKfp61IaOPkaRctgDS_uQBEYnkhai4I");'></div>
+</a>
+<!-- </div>
+</div> -->
+</header>
+<div class="flex flex-1 justify-center py-5 px-4 md:px-10 lg:px-40">
+<div class="layout-content-container flex flex-col max-w-[1200px] flex-1">
+<!-- Breadcrumbs -->
+<div class="flex flex-wrap gap-2 px-4 py-2 mb-4">
+<a class="text-[#617589] dark:text-gray-400 text-sm font-medium leading-normal hover:text-primary transition-colors" href="{% url 'dashboard' %}">Dashboard</a>
+<span class="text-[#617589] dark:text-gray-400 text-sm font-medium leading-normal">/</span>
+<span class="text-[#111418] dark:text-white text-sm font-medium leading-normal">Pengaturan</span>
+</div>
+<!-- Page Heading -->
+<div class="flex flex-wrap justify-between gap-3 px-4 pb-6">
+<div class="flex min-w-72 flex-col gap-2">
+<h1 class="text-[#111418] dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Pengaturan</h1>
+<p class="text-[#617589] dark:text-gray-400 text-base font-normal leading-normal">Kelola preferensi aplikasi global dan konfigurasi warung Anda.</p>
+</div>
+</div>
+<!-- Main Layout: Sidebar + Content -->
+<!-- <div class="flex flex-col lg:flex-row gap-6 px-4"> -->
+<!-- Sidebar Navigation -->
+<!-- <aside class="w-full lg:w-64 flex-shrink-0">
+<div class="flex flex-col gap-2 bg-white dark:bg-[#1a2632] p-4 rounded-xl shadow-sm border border-[#e5e7eb] dark:border-[#2a3441]">
+<div class="pb-2 mb-2 border-b border-[#f0f2f4] dark:border-[#2a3441]">
+<h3 class="text-[#617589] dark:text-gray-400 text-xs font-bold uppercase tracking-wider px-3 py-1">Menu</h3>
+</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary" href="{% url 'settings' %}">
+<span class="material-symbols-outlined text-[20px] fill-current">settings</span>
+<span class="text-sm font-semibold leading-normal">General</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111418] dark:text-gray-300 hover:bg-[#f0f2f4] dark:hover:bg-[#2a3441] transition-colors group" href="{% url 'staff' %}">
+<span class="material-symbols-outlined text-[20px] text-gray-500 group-hover:text-[#111418] dark:group-hover:text-white transition-colors">group</span>
+<span class="text-sm font-medium leading-normal">Staff Management</span>
+</a>
+
+<div class="my-2 border-t border-[#f0f2f4] dark:border-[#2a3441]"></div>
+
+</div> -->
+</aside>
+<!-- Main Content Form -->
+<main class="flex-1">
+<div class="bg-white dark:bg-[#1a2632] rounded-xl shadow-sm border border-[#e5e7eb] dark:border-[#2a3441] overflow-hidden">
+<!-- Content Header -->
+<div class="border-b border-[#f0f2f4] dark:border-[#2a3441] px-6 py-5">
+<h2 class="text-[#111418] dark:text-white text-xl font-bold leading-tight">General Settings</h2>
+<p class="text-[#617589] dark:text-gray-400 text-sm mt-1">Configure your shop details and interface preferences.</p>
+</div>
+<div class="p-6 space-y-8">
+<!-- Shop Details Section -->
+<section>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">storefront</span>
+<h3 class="text-[#111418] dark:text-white text-lg font-bold">Shop Details</h3>
+</div>
+<div class="grid gap-6 md:grid-cols-2">
+<div class="flex flex-col gap-1">
+<label class="text-[#111418] dark:text-gray-200 text-sm font-medium leading-normal">Warung Name</label>
+<input class="form-input w-full rounded-lg border border-[#dce0e5] dark:border-gray-600 bg-white dark:bg-[#101922] text-[#111418] dark:text-white h-11 px-3 py-2 text-sm placeholder:text-[#9eaebc] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" type="text" value="" placeholder="Masukkan nama Baru"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-[#111418] dark:text-gray-200 text-sm font-medium leading-normal">Currency</label>
+<select class="form-select w-full rounded-lg border border-[#dce0e5] dark:border-gray-600 bg-white dark:bg-[#101922] text-[#111418] dark:text-white h-11 px-3 py-2 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
+<option selected="">Indonesian Rupiah (IDR)</option>
+<option>US Dollar (USD)</option>
+<option>Euro (EUR)</option>
+</select>
+</div>
+</div>
+</section>
+<hr class="border-[#f0f2f4] dark:border-[#2a3441]"/>
+<!-- Localization Section -->
+<section>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">language</span>
+<h3 class="text-[#111418] dark:text-white text-lg font-bold">Localization</h3>
+</div>
+<div class="grid gap-6 md:grid-cols-2">
+<div class="flex flex-col gap-1">
+<label class="text-[#111418] dark:text-gray-200 text-sm font-medium leading-normal">Language</label>
+<select class="form-select w-full rounded-lg border border-[#dce0e5] dark:border-gray-600 bg-white dark:bg-[#101922] text-[#111418] dark:text-white h-11 px-3 py-2 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
+<option>English (US)</option>
+<option selected="">Bahasa Indonesia</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-[#111418] dark:text-gray-200 text-sm font-medium leading-normal">Timezone</label>
+<select class="form-select w-full rounded-lg border border-[#dce0e5] dark:border-gray-600 bg-white dark:bg-[#101922] text-[#111418] dark:text-white h-11 px-3 py-2 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
+<option>(GMT+07:00) Bangkok, Hanoi, Jakarta</option>
+<option>(GMT+08:00) Kuala Lumpur, Singapore</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-[#111418] dark:text-gray-200 text-sm font-medium leading-normal">Date Format</label>
+<select class="form-select w-full rounded-lg border border-[#dce0e5] dark:border-gray-600 bg-white dark:bg-[#101922] text-[#111418] dark:text-white h-11 px-3 py-2 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
+<option selected="">DD/MM/YYYY</option>
+<option>MM/DD/YYYY</option>
+<option>YYYY-MM-DD</option>
+</select>
+</div>
+</div>
+</section>
+<hr class="border-[#f0f2f4] dark:border-[#2a3441]"/>
+<!-- Appearance Section -->
+<section>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">palette</span>
+<h3 class="text-[#111418] dark:text-white text-lg font-bold">Appearance</h3>
+</div>
+<div class="flex flex-col gap-4">
+<label class="text-[#111418] dark:text-gray-200 text-sm font-medium leading-normal">Interface Theme</label>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<label class="cursor-pointer relative">
+<input class="peer sr-only" name="theme" type="radio" value="light"/>
+<div class="p-4 rounded-xl border border-[#dce0e5] dark:border-gray-600 hover:border-primary peer-checked:border-primary peer-checked:ring-1 peer-checked:ring-primary bg-[#fcfcfc] dark:bg-[#101922] transition-all h-full flex flex-col items-center justify-center gap-3">
+<div class="w-16 h-12 bg-white border border-gray-200 rounded shadow-sm"></div>
+<span class="text-sm font-medium text-[#111418] dark:text-white">Light</span>
+</div>
+<div class="absolute top-2 right-2 text-primary opacity-0 peer-checked:opacity-100">
+<span class="material-symbols-outlined text-[20px] fill-current">check_circle</span>
+</div>
+</label>
+<label class="cursor-pointer relative">
+<input class="peer sr-only" name="theme" type="radio" value="dark"/>
+<div class="p-4 rounded-xl border border-[#dce0e5] dark:border-gray-600 hover:border-primary peer-checked:border-primary peer-checked:ring-1 peer-checked:ring-primary bg-[#fcfcfc] dark:bg-[#101922] transition-all h-full flex flex-col items-center justify-center gap-3">
+<div class="w-16 h-12 bg-[#1a2632] border border-gray-600 rounded shadow-sm"></div>
+<span class="text-sm font-medium text-[#111418] dark:text-white">Dark</span>
+</div>
+<div class="absolute top-2 right-2 text-primary opacity-0 peer-checked:opacity-100">
+<span class="material-symbols-outlined text-[20px] fill-current">check_circle</span>
+</div>
+</label>
+<label class="cursor-pointer relative">
+<input class="peer sr-only" name="theme" type="radio" value="system"/>
+<div class="p-4 rounded-xl border border-[#dce0e5] dark:border-gray-600 hover:border-primary peer-checked:border-primary peer-checked:ring-1 peer-checked:ring-primary bg-[#fcfcfc] dark:bg-[#101922] transition-all h-full flex flex-col items-center justify-center gap-3">
+<div class="flex w-16 h-12 rounded overflow-hidden border border-gray-200">
+<div class="w-1/2 bg-white"></div>
+<div class="w-1/2 bg-[#1a2632]"></div>
+</div>
+<span class="text-sm font-medium text-[#111418] dark:text-white">System Auto</span>
+</div>
+<div class="absolute top-2 right-2 text-primary opacity-0 peer-checked:opacity-100">
+<span class="material-symbols-outlined text-[20px] fill-current">check_circle</span>
+</div>
+</label>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer Action Bar -->
+<div class="bg-[#f9fafb] dark:bg-[#101922] px-6 py-4 flex items-center justify-end gap-3 border-t border-[#f0f2f4] dark:border-[#2a3441]">
+<button class="px-5 h-10 rounded-lg border border-[#dce0e5] dark:border-gray-600 bg-white dark:bg-transparent text-[#111418] dark:text-white text-sm font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                                Cancel
+                            </button>
+<button id="save-settings-btn" class="px-5 h-10 rounded-lg bg-primary text-white text-sm font-bold hover:bg-blue-600 shadow-sm transition-colors flex items-center gap-2">
+<span>Save Changes</span>
+</button>
+</div>
+</div>
+<!-- Quick Link Card for User Management -->
+
+</main>
+</div>
+</div>
+</div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeRadios = document.querySelectorAll('input[name="theme"]');
+        const htmlElement = document.documentElement;
+        const saveButton = document.getElementById('save-settings-btn');
+
+        // Function to apply theme
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                htmlElement.classList.add('dark');
+            } else if (theme === 'light') {
+                htmlElement.classList.remove('dark');
+            } else {
+                // System Auto
+                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    htmlElement.classList.add('dark');
+                } else {
+                    htmlElement.classList.remove('dark');
+                }
+            }
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        applyTheme(savedTheme);
+
+        // Set active radio and add listeners
+        themeRadios.forEach(radio => {
+            if (radio.value === savedTheme) radio.checked = true;
+        });
+
+        // Save changes on button click
+        saveButton.addEventListener('click', () => {
+            const selectedRadio = document.querySelector('input[name="theme"]:checked');
+            if (selectedRadio) {
+                const selectedTheme = selectedRadio.value;
+                localStorage.setItem('theme', selectedTheme);
+                applyTheme(selectedTheme);
+            }
+        });
+
+        // Listen for system changes if 'system' is selected
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (localStorage.getItem('theme') === 'system') {
+                if (e.matches) htmlElement.classList.add('dark');
+                else htmlElement.classList.remove('dark');
+            }
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedAvatar = localStorage.getItem('userAvatar');
+        if (savedAvatar) {
+            document.querySelectorAll('.user-avatar-target').forEach(el => {
+                el.style.backgroundImage = `url('${savedAvatar}')`;
+            });
+        }
+    });
+</script>
+</body></html>

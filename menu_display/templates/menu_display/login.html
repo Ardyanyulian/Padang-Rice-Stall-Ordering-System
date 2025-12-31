@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Login - Warung Management System</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<script>
+    (function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        const htmlElement = document.documentElement;
+        if (savedTheme === 'dark') {
+            htmlElement.classList.add('dark');
+        } else if (savedTheme === 'system') {
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                htmlElement.classList.add('dark');
+            }
+        } else {
+            htmlElement.classList.remove('dark');
+        }
+    })();
+</script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111418] dark:text-white antialiased transition-colors duration-200">
+<div class="relative min-h-screen w-full flex flex-col justify-center items-center p-4 overflow-hidden">
+<!-- Background Ambient Effects -->
+<div class="absolute inset-0 w-full h-full pointer-events-none z-0">
+<div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/5 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-400/5 rounded-full blur-[120px]"></div>
+</div>
+<!-- Layout Container -->
+<div class="relative z-10 w-full max-w-[480px]">
+<!-- Card -->
+<div class="flex flex-col bg-white dark:bg-[#1a242f] rounded-xl shadow-xl border border-[#dbe0e6] dark:border-gray-800 overflow-hidden">
+<!-- Header Section -->
+<div class="flex flex-col items-center px-8 pt-10 pb-2">
+<!-- Icon/Logo Placeholder -->
+<div class="h-14 w-14 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-5">
+<span class="material-symbols-outlined text-[32px]">storefront</span>
+</div>
+<div class="flex flex-col gap-2 text-center">
+<h1 class="text-[#111418] dark:text-white tracking-tight text-[28px] font-bold leading-tight">Admin Portal</h1>
+<p class="text-[#617589] dark:text-gray-400 text-sm font-normal leading-normal max-w-[320px] mx-auto">
+                            Log in to manage your Warung inventory and sales.
+                        </p>
+</div>
+</div>
+<!-- Form Section -->
+<div class="flex flex-col gap-5 px-8 py-6">
+<!-- Username Field -->
+<div class="flex flex-col gap-2">
+<label class="text-[#111418] dark:text-gray-200 text-sm font-medium leading-normal">
+                            Nama Admin
+                        </label>
+<div class="relative flex items-center">
+<input class="form-input flex w-full resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary border border-[#dbe0e6] dark:border-gray-600 bg-white dark:bg-[#1a242f] h-12 placeholder:text-[#617589] dark:placeholder:text-gray-500 pl-4 pr-4 text-base font-normal leading-normal transition-all" placeholder="Masukkan Nama Admin" type="text" value=""/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="flex flex-col gap-2">
+<label class="text-[#111418] dark:text-gray-200 text-sm font-medium leading-normal">
+                            Password
+                        </label>
+<div class="flex w-full items-stretch rounded-lg relative group">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg rounded-r-none border border-r-0 border-[#dbe0e6] dark:border-gray-600 bg-white dark:bg-[#1a242f] text-[#111418] dark:text-white h-12 placeholder:text-[#617589] dark:placeholder:text-gray-500 p-[15px] pr-2 text-base font-normal leading-normal focus:outline-none focus:ring-0 focus:border-[#dbe0e6] dark:focus:border-gray-600 z-10" placeholder="Masukkan Password" type="password" value=""/>
+<!-- Custom focus ring wrapper hack not needed with simple focus-within on parent, but sticking to provided structure logic -->
+<div class="flex items-center justify-center px-4 bg-white dark:bg-[#1a242f] border border-l-0 border-[#dbe0e6] dark:border-gray-600 rounded-r-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-[#617589] dark:text-gray-400 select-none">visibility</span>
+</div>
+<!-- Focus Ring Overlay for Group -->
+<div class="absolute inset-0 rounded-lg pointer-events-none transition-all border-2 border-transparent group-focus-within:border-primary/50 z-20"></div>
+</div>
+</div>
+<!-- Login Button -->
+<div class="pt-2">
+<a href="{% url 'dashboard' %}">
+<button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary hover:bg-[#116ecf] text-white text-base font-bold leading-normal tracking-[0.015em] transition-colors shadow-sm active:scale-[0.99] active:transform">
+<span class="truncate"  >Login</span>
+</button>
+</a>
+</div>
+<!-- Forgot Password Link -->
+<div class="flex justify-center pt-1 pb-4">
+<a class="text-[#617589] dark:text-gray-400 text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary transition-colors" href="#">
+                            Forgot Password?
+                        </a>
+</div>
+</div>
+</div>
+<!-- Optional Footer Info -->
+<div class="mt-8 text-center">
+<p class="text-xs text-[#617589]/60 dark:text-gray-500 font-normal">
+                    © 2023 Warung Management System
+                </p>
+</div>
+</div>
+</div>
+</body></html>

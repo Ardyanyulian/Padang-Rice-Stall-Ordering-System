@@ -28,6 +28,21 @@
             },
         }
     </script>
+<script>
+    (function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        const htmlElement = document.documentElement;
+        if (savedTheme === 'dark') {
+            htmlElement.classList.add('dark');
+        } else if (savedTheme === 'system') {
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                htmlElement.classList.add('dark');
+            }
+        } else {
+            htmlElement.classList.remove('dark');
+        }
+    })();
+</script>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-[#111418] dark:text-white min-h-screen flex flex-col">
 <!-- Top Navigation Bar -->
@@ -40,16 +55,17 @@
 </div>
 <div class="flex flex-1 justify-end gap-8">
 <div class="hidden md:flex items-center gap-9">
-<a class="text-[#111418] dark:text-gray-200 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Kelola Barang</a>
-<a class="text-[#111418] dark:text-gray-200 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Lihat Laporan</a>
+<a class="text-[#111418] dark:text-gray-200 text-sm font-medium leading-normal hover:text-primary transition-colors" href="{% url 'laporan' %}">Lihat Laporan</a>
 </div>
+<a href="{% url 'profile' %}">
 <div class="flex items-center gap-3 pl-4 border-l border-[#dbe0e6] dark:border-gray-700">
 <div class="text-right hidden sm:block">
 <p class="text-sm font-bold leading-none">Budi Santoso</p>
 <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Admin</p>
 </div>
-<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="Portrait of Budi Santoso user avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBA3Y747r-lrPDUGpf_EGFsmfMwTQeD-RCq-1H_wabZO05J3mdd1Y82GKhJHm06ui3x38nkDh-z6jlvKQCjcMQNICIuTpcK_WCoJl-HmZkRP5prLmRfZtwAgou2Q9epnWesN54N9HpUTuKZN3EYZXrXDpkuuoxfjFgHA_he_9J7qJV2klRybdbWY1HDDVSR3Z5unOe6sTghMHFWuAThRg2EV8e99P1z6gLWVM7Psx9Vym8p5hsBrcPp3cnWWIYMvanu4XEcUOttIaKq");'></div>
+<div class="user-avatar-target bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="Portrait of Budi Santoso user avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAOw-SdBT3DkoTrC6ENQ_k8pKEh3ZJ4WKNE3T6gSdFJ3gSFAwjlETwbwd8dzU6zMJgwd6n8Bqq6k1qIjIxqgPALUBVg7Cd1uhyQaxm1RC4xPP29YuakwA5WiHXxUIwA9_8jDxZJWVl8LHjFZLBI0NV5i-OeGK8u2Q-o75sL9g18FCWvZfytSTnEEA-9pk2RRDToxtPWcytmfAc_w85KfMuNEP0kZNciMiRlKDexAFvD3PKA0fKfp61IaOPkaRctgDS_uQBEYnkhai4I");'></div>
 </div>
+</a>
 </div>
 </header>
 <!-- Main Content Area -->
@@ -73,10 +89,12 @@
 <p class="text-[#617589] dark:text-gray-400 text-sm font-medium">Total Aset</p>
 <p class="text-primary text-2xl font-bold tracking-tight">Rp 15.450.000</p>
 </div>
+<a href="{% url 'tambah' %}">
 <button class="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary hover:bg-blue-600 text-white text-sm font-bold leading-normal tracking-[0.015em] transition-colors shadow-lg shadow-blue-500/20 gap-2">
 <span class="material-symbols-outlined text-[20px]">add_circle</span>
 <span class="truncate">Tambah Barang</span>
 </button>
+</a>
 </div>
 </div>
 <!-- Mobile Stats Widget (Visible only on smaller screens) -->
@@ -266,4 +284,14 @@
 </div>
 </div>
 </main>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedAvatar = localStorage.getItem('userAvatar');
+        if (savedAvatar) {
+            document.querySelectorAll('.user-avatar-target').forEach(el => {
+                el.style.backgroundImage = `url('${savedAvatar}')`;
+            });
+        }
+    });
+</script>
 </body></html>
