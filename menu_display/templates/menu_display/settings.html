@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -72,8 +71,8 @@
 <button class="flex items-center justify-center overflow-hidden rounded-lg size-10 bg-[#f0f2f4] dark:bg-[#2a3441] text-[#111418] dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
 <span class="material-symbols-outlined text-[20px]">chat_bubble</span>
 </button> -->
-<a href="{% url 'profile' %}">
-<div class="user-avatar-target bg-center bg-no-repeat bg-cover rounded-full size-10 ml-2 border border-gray-200 dark:border-gray-700 cursor-pointer" data-alt="User profile avatar showing a smiling person" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAOw-SdBT3DkoTrC6ENQ_k8pKEh3ZJ4WKNE3T6gSdFJ3gSFAwjlETwbwd8dzU6zMJgwd6n8Bqq6k1qIjIxqgPALUBVg7Cd1uhyQaxm1RC4xPP29YuakwA5WiHXxUIwA9_8jDxZJWVl8LHjFZLBI0NV5i-OeGK8u2Q-o75sL9g18FCWvZfytSTnEEA-9pk2RRDToxtPWcytmfAc_w85KfMuNEP0kZNciMiRlKDexAFvD3PKA0fKfp61IaOPkaRctgDS_uQBEYnkhai4I");'></div>
+<a href="{% url 'profile' request.session.ID %}">
+<div class="user-avatar-target bg-center bg-no-repeat bg-cover rounded-full size-10 ml-2 border border-gray-200 dark:border-gray-700 cursor-pointer" data-alt="User profile avatar showing a smiling person" style="background-image: url('{{ request.session.foto|default:'/static/img/default-avatar.png' }}');"></div>
 </a>
 <!-- </div>
 </div> -->
@@ -125,21 +124,19 @@
 <div class="p-6 space-y-8">
 <!-- Shop Details Section -->
 <section>
-<div class="flex items-center gap-2 mb-4">
+{% comment %} <div class="flex items-center gap-2 mb-4">
 <span class="material-symbols-outlined text-primary">storefront</span>
 <h3 class="text-[#111418] dark:text-white text-lg font-bold">Shop Details</h3>
-</div>
+</div> {% endcomment %}
 <div class="grid gap-6 md:grid-cols-2">
-<div class="flex flex-col gap-1">
+{% comment %} <div class="flex flex-col gap-1">
 <label class="text-[#111418] dark:text-gray-200 text-sm font-medium leading-normal">Warung Name</label>
 <input class="form-input w-full rounded-lg border border-[#dce0e5] dark:border-gray-600 bg-white dark:bg-[#101922] text-[#111418] dark:text-white h-11 px-3 py-2 text-sm placeholder:text-[#9eaebc] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" type="text" value="" placeholder="Masukkan nama Baru"/>
-</div>
+</div> {% endcomment %}
 <div class="flex flex-col gap-1">
 <label class="text-[#111418] dark:text-gray-200 text-sm font-medium leading-normal">Currency</label>
 <select class="form-select w-full rounded-lg border border-[#dce0e5] dark:border-gray-600 bg-white dark:bg-[#101922] text-[#111418] dark:text-white h-11 px-3 py-2 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
 <option selected="">Indonesian Rupiah (IDR)</option>
-<option>US Dollar (USD)</option>
-<option>Euro (EUR)</option>
 </select>
 </div>
 </div>
@@ -155,7 +152,6 @@
 <div class="flex flex-col gap-1">
 <label class="text-[#111418] dark:text-gray-200 text-sm font-medium leading-normal">Language</label>
 <select class="form-select w-full rounded-lg border border-[#dce0e5] dark:border-gray-600 bg-white dark:bg-[#101922] text-[#111418] dark:text-white h-11 px-3 py-2 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
-<option>English (US)</option>
 <option selected="">Bahasa Indonesia</option>
 </select>
 </div>

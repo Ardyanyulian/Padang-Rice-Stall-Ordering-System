@@ -84,8 +84,8 @@
 <a class="text-primary text-sm font-bold leading-normal" href="{% url 'transaksi' %}">Transaksi</a>
 <a class="text-[#111418] dark:text-gray-200 text-sm font-medium leading-normal hover:text-primary transition-colors" href="{% url 'settings' %}">Pengaturan</a>
 </div>
-<a href="{% url 'profile' %}">
-<div class="user-avatar-target bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-gray-200 dark:border-gray-700" data-alt="User profile picture placeholder with abstract pattern" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAOw-SdBT3DkoTrC6ENQ_k8pKEh3ZJ4WKNE3T6gSdFJ3gSFAwjlETwbwd8dzU6zMJgwd6n8Bqq6k1qIjIxqgPALUBVg7Cd1uhyQaxm1RC4xPP29YuakwA5WiHXxUIwA9_8jDxZJWVl8LHjFZLBI0NV5i-OeGK8u2Q-o75sL9g18FCWvZfytSTnEEA-9pk2RRDToxtPWcytmfAc_w85KfMuNEP0kZNciMiRlKDexAFvD3PKA0fKfp61IaOPkaRctgDS_uQBEYnkhai4I");'></div>
+<a href="{% url 'profile' request.session.ID %}">
+<div class="user-avatar-target bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-gray-200 dark:border-gray-700" data-alt="User profile picture placeholder with abstract pattern" style="background-image: url('{{ request.session.foto|default:'/static/img/default-avatar.png' }}');"></div>
 </a>
 </div>
 </header>

@@ -102,8 +102,8 @@
 <button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-400">
 <span class="material-symbols-outlined">notifications</span>
 </button> -->
-<a href="{% url 'profile' %}">
-<div class="user-avatar-target bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-slate-200 dark:border-slate-700" data-alt="User avatar profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAOw-SdBT3DkoTrC6ENQ_k8pKEh3ZJ4WKNE3T6gSdFJ3gSFAwjlETwbwd8dzU6zMJgwd6n8Bqq6k1qIjIxqgPALUBVg7Cd1uhyQaxm1RC4xPP29YuakwA5WiHXxUIwA9_8jDxZJWVl8LHjFZLBI0NV5i-OeGK8u2Q-o75sL9g18FCWvZfytSTnEEA-9pk2RRDToxtPWcytmfAc_w85KfMuNEP0kZNciMiRlKDexAFvD3PKA0fKfp61IaOPkaRctgDS_uQBEYnkhai4I");'></div>
+<a href="{% url 'profile' request.session.ID %}">
+<div class="user-avatar-target bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-slate-200 dark:border-slate-700" data-alt="User avatar profile picture" style="background-image: url('{{ request.session.foto|default:'/static/img/default-avatar.png' }}');"></div>
 </a>
 </div>
 </div>

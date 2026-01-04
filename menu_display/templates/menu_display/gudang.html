@@ -1,5 +1,5 @@
+{% load humanize %}
 <!DOCTYPE html>
-
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -57,13 +57,13 @@
 <div class="hidden md:flex items-center gap-9">
 <a class="text-[#111418] dark:text-gray-200 text-sm font-medium leading-normal hover:text-primary transition-colors" href="{% url 'laporan' %}">Lihat Laporan</a>
 </div>
-<a href="{% url 'profile' %}">
+<a href="{% url 'profile' request.session.ID %}">
 <div class="flex items-center gap-3 pl-4 border-l border-[#dbe0e6] dark:border-gray-700">
 <div class="text-right hidden sm:block">
-<p class="text-sm font-bold leading-none">Budi Santoso</p>
-<p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Admin</p>
+<p class="text-sm font-bold leading-none">{{ request.session.nama }}</p>
+<p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ request.session.hak }}</p>
 </div>
-<div class="user-avatar-target bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="Portrait of Budi Santoso user avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAOw-SdBT3DkoTrC6ENQ_k8pKEh3ZJ4WKNE3T6gSdFJ3gSFAwjlETwbwd8dzU6zMJgwd6n8Bqq6k1qIjIxqgPALUBVg7Cd1uhyQaxm1RC4xPP29YuakwA5WiHXxUIwA9_8jDxZJWVl8LHjFZLBI0NV5i-OeGK8u2Q-o75sL9g18FCWvZfytSTnEEA-9pk2RRDToxtPWcytmfAc_w85KfMuNEP0kZNciMiRlKDexAFvD3PKA0fKfp61IaOPkaRctgDS_uQBEYnkhai4I");'></div>
+<div class="user-avatar-target bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="Portrait of Budi Santoso user avatar" style="background-image: url('{{ request.session.foto|default:'/static/img/default-avatar.png' }}');"></div>
 </div>
 </a>
 </div>
@@ -122,6 +122,7 @@
 </button>
 </div>
 </div>
+
 <div class="overflow-x-auto">
 <table class="w-full text-left border-collapse">
 <thead>
@@ -135,163 +136,165 @@
 </tr>
 </thead>
 <tbody class="divide-y divide-[#dbe0e6] dark:divide-gray-700">
-<!-- Row 1: High Stock -->
-<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors group">
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<div class="size-10 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-500">
-<span class="material-symbols-outlined text-[20px]">inventory_2</span>
-</div>
-<div>
-<p class="text-sm font-medium text-[#111418] dark:text-white">Beras Raja Lele</p>
-<p class="text-xs text-gray-500 dark:text-gray-400">ID: BRL-001</p>
-</div>
-</div>
-</td>
-<td class="px-6 py-4">
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
-                                        50 Sak
-                                    </span>
-</td>
-<td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">Rp 110.000</td>
-<td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">Rp 125.000</td>
-<td class="px-6 py-4 text-sm font-semibold text-[#111418] dark:text-white text-right">Rp 6.250.000</td>
-<td class="px-6 py-4 text-right">
-<button class="text-gray-400 hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-<span class="material-symbols-outlined">more_vert</span>
-</button>
-</td>
-</tr>
-<!-- Row 2: High Stock -->
-<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors group">
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<div class="size-10 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-500">
-<span class="material-symbols-outlined text-[20px]">inventory_2</span>
-</div>
-<div>
-<p class="text-sm font-medium text-[#111418] dark:text-white">Minyak Goreng Filma</p>
-<p class="text-xs text-gray-500 dark:text-gray-400">ID: MGF-023</p>
-</div>
-</div>
-</td>
-<td class="px-6 py-4">
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
-                                        30 Karton
-                                    </span>
-</td>
-<td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">Rp 180.000</td>
-<td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">Rp 200.000</td>
-<td class="px-6 py-4 text-sm font-semibold text-[#111418] dark:text-white text-right">Rp 6.000.000</td>
-<td class="px-6 py-4 text-right">
-<button class="text-gray-400 hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-<span class="material-symbols-outlined">more_vert</span>
-</button>
-</td>
-</tr>
-<!-- Row 3: Low Stock (Highlighted) -->
-<tr class="bg-red-50/60 hover:bg-red-50 dark:bg-red-900/10 dark:hover:bg-red-900/20 transition-colors group border-l-4 border-l-red-500">
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<div class="size-10 rounded-lg bg-red-100 dark:bg-red-900/40 flex items-center justify-center text-red-600 dark:text-red-400">
-<span class="material-symbols-outlined text-[20px]">warning</span>
-</div>
-<div>
-<p class="text-sm font-bold text-red-700 dark:text-red-300">Telur Ayam</p>
-<p class="text-xs text-red-500 dark:text-red-400/70">ID: TLA-005 • Low Stock</p>
-</div>
-</div>
-</td>
-<td class="px-6 py-4">
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-white border border-red-200 text-red-700 dark:bg-red-900/50 dark:border-red-800 dark:text-red-300">
-                                        5 Tray
-                                    </span>
-</td>
-<td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">Rp 45.000</td>
-<td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">Rp 50.000</td>
-<td class="px-6 py-4 text-sm font-semibold text-[#111418] dark:text-white text-right">Rp 250.000</td>
-<td class="px-6 py-4 text-right">
-<button class="flex items-center justify-center size-8 bg-red-100 text-red-600 rounded hover:bg-red-200 transition-colors ml-auto" title="Restock Now">
-<span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
-</button>
-</td>
-</tr>
-<!-- Row 4: High Stock -->
-<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors group">
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<div class="size-10 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-500">
-<span class="material-symbols-outlined text-[20px]">inventory_2</span>
-</div>
-<div>
-<p class="text-sm font-medium text-[#111418] dark:text-white">Gula Pasir Gulaku</p>
-<p class="text-xs text-gray-500 dark:text-gray-400">ID: GPG-112</p>
-</div>
-</div>
-</td>
-<td class="px-6 py-4">
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
-                                        40 Pack
-                                    </span>
-</td>
-<td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">Rp 15.000</td>
-<td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">Rp 18.000</td>
-<td class="px-6 py-4 text-sm font-semibold text-[#111418] dark:text-white text-right">Rp 720.000</td>
-<td class="px-6 py-4 text-right">
-<button class="text-gray-400 hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-<span class="material-symbols-outlined">more_vert</span>
-</button>
-</td>
-</tr>
-<!-- Row 5: Low Stock (Highlighted) -->
-<tr class="bg-red-50/60 hover:bg-red-50 dark:bg-red-900/10 dark:hover:bg-red-900/20 transition-colors group border-l-4 border-l-red-500">
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<div class="size-10 rounded-lg bg-red-100 dark:bg-red-900/40 flex items-center justify-center text-red-600 dark:text-red-400">
-<span class="material-symbols-outlined text-[20px]">warning</span>
-</div>
-<div>
-<p class="text-sm font-bold text-red-700 dark:text-red-300">Garam Dapur</p>
-<p class="text-xs text-red-500 dark:text-red-400/70">ID: GRM-009 • Low Stock</p>
-</div>
-</div>
-</td>
-<td class="px-6 py-4">
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-white border border-red-200 text-red-700 dark:bg-red-900/50 dark:border-red-800 dark:text-red-300">
-                                        2 Pack
-                                    </span>
-</td>
-<td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">Rp 2.000</td>
-<td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">Rp 3.500</td>
-<td class="px-6 py-4 text-sm font-semibold text-[#111418] dark:text-white text-right">Rp 7.000</td>
-<td class="px-6 py-4 text-right">
-<button class="flex items-center justify-center size-8 bg-red-100 text-red-600 rounded hover:bg-red-200 transition-colors ml-auto" title="Restock Now">
-<span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
-</button>
-</td>
-</tr>
+{% for items in barang %}
+    {% if items.stok >= 10 %}
+    <!-- Row 1: High Stock -->
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors group">
+            <td class="px-6 py-4">
+            <div class="flex items-center gap-3">
+            <div class="size-10 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-500">
+            <span class="material-symbols-outlined text-[20px]">inventory_2</span>
+            </div>
+            <div>
+            <p class="text-sm font-medium text-[#111418] dark:text-white">{{ items.nama }}</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">{{ items.ID }}</p>
+            </div>
+            </div>
+            </td>
+            <td class="px-6 py-4">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                                                    {{ items.stok }} biji
+                                                </span>
+            </td>
+            <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300" >Rp {{ items.hargaBeli|intcomma }}</td>
+            <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300" >Rp {{ items.hargaJual|intcomma }}</td>
+            <td class="px-6 py-4 text-sm font-semibold text-[#111418] dark:text-white text-right" >Rp {{ items.total|intcomma }}</td>
+
+            <td class="px-6 py-4 text-right">
+                <div class="flex justify-end gap-2">
+                    <button onclick="openModal('{{ items.ID }}', '{{ items.nama }}', 'tambah')" 
+                            class="flex items-center justify-center size-8 bg-blue-100 text-blue-600 rounded hover:bg-blue-200">
+                        <span class="material-symbols-outlined text-[18px]">add</span>
+                    </button>
+
+                    <button onclick="openModal('{{ items.ID }}', '{{ items.nama }}', 'kurang')" 
+                            class="flex items-center justify-center size-8 bg-orange-100 text-orange-600 rounded hover:bg-orange-200">
+                        <span class="material-symbols-outlined text-[18px]">remove</span>
+                    </button>
+
+                    {% if request.session.hak == 'admin' %}
+                    <a href="{% url 'hapus_barang' items.ID %}" onclick="return confirm('Hapus barang ini?')"
+                    class="flex items-center justify-center size-8 bg-red-100 text-red-600 rounded hover:bg-red-200">
+                        <span class="material-symbols-outlined text-[18px]">delete</span>
+                    </a>
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+    {% endif  %}
+    {% if items.stok < 10 %}
+    <!-- Row 3: Low Stock (Highlighted) -->
+        <tr class="bg-red-50/60 hover:bg-red-50 dark:bg-red-900/10 dark:hover:bg-red-900/20 transition-colors group border-l-4 border-l-red-500">
+            <td class="px-6 py-4">
+            <div class="flex items-center gap-3">
+            <div class="size-10 rounded-lg bg-red-100 dark:bg-red-900/40 flex items-center justify-center text-red-600 dark:text-red-400">
+            <span class="material-symbols-outlined text-[20px]">warning</span>
+            </div>
+            <div>
+            <p class="text-sm font-bold text-red-700 dark:text-red-300">{{ items.nama }}</p>
+        <p class="text-xs text-red-500 dark:text-red-400/70">{{ items.ID }} • Low Stock</p>
+            </div>
+            </div>
+            </td>
+            <td class="px-6 py-4">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-white border border-red-200 text-red-700 dark:bg-red-900/50 dark:border-red-800 dark:text-red-300">
+                {{ items.stok }} biji
+            </span>
+            </td>
+        <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300"  >Rp {{ items.hargaBeli|intcomma }}</td>
+        
+                <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300"  >Rp {{ items.hargaJual|intcomma }}</td>
+                <td class="px-6 py-4 text-sm font-semibold text-[#111418] dark:text-white text-right" >Rp {{ items.total|intcomma }}</td>
+                <td class="px-6 py-4 text-right">
+                    <div class="flex justify-end gap-2">
+                        <button onclick="openModal('{{ items.ID }}', '{{ items.nama }}', 'tambah')" 
+                                class="flex items-center justify-center size-8 bg-blue-100 text-blue-600 rounded hover:bg-blue-200">
+                            <span class="material-symbols-outlined text-[18px]">add</span>
+                        </button>
+
+                        <button onclick="openModal('{{ items.ID }}', '{{ items.nama }}', 'kurang')" 
+                                class="flex items-center justify-center size-8 bg-orange-100 text-orange-600 rounded hover:bg-orange-200">
+                            <span class="material-symbols-outlined text-[18px]">remove</span>
+                        </button>
+
+                        {% if request.session.hak == 'admin' %}
+                        <a href="{% url 'hapus_barang' items.id %}" onclick="return confirm('Hapus barang ini?')"
+                        class="flex items-center justify-center size-8 bg-red-100 text-red-600 rounded hover:bg-red-200">
+                            <span class="material-symbols-outlined text-[18px]">delete</span>
+                        </a>
+                        {% endif %}
+                    </div>
+                </td>
+        </tr>
+    {% endif  %}
+{% endfor %}
 </tbody>
 </table>
 </div>
 <!-- Pagination Footer -->
 <div class="flex items-center justify-between p-4 border-t border-[#dbe0e6] dark:border-gray-800">
-<p class="text-sm text-gray-500 dark:text-gray-400">Menampilkan 5 dari 124 barang</p>
-<div class="flex gap-2">
-<button class="px-3 py-1 rounded border border-[#dbe0e6] dark:border-gray-700 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50">Prev</button>
-<button class="px-3 py-1 rounded border border-[#dbe0e6] dark:border-gray-700 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">Next</button>
+    <p class="text-sm text-gray-500 dark:text-gray-400">Menampilkan {{ barang.start_index }} - {{ barang.end_index }} dari {{ barang.paginator.count }}</p>
+    <div class="flex gap-2">
+        {% if barang.has_previous %}
+            <a href="?page={{ barang.previous_page_number }}" class="px-3 py-1 rounded border border-[#dbe0e6] dark:border-gray-700 text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800">Prev</a>
+        {% else %}
+            <button class="px-3 py-1 rounded border opacity-50 cursor-not-allowed text-sm" disabled>Prev</button>
+        {% endif %}
+
+        {% if barang.has_next %}
+            <a href="?page={{ barang.next_page_number }}" class="px-3 py-1 rounded border border-[#dbe0e6] dark:border-gray-700 text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800">Next</a>
+        {% else %}
+            <button class="px-3 py-1 rounded border opacity-50 cursor-not-allowed text-sm" disabled>Next</button>
+        {% endif %}
+    </div>
+    </div>
+    </div>
 </div>
-</div>
-</div>
+<div id="modal-stok" class="fixed inset-0 z-[60] hidden overflow-y-auto">
+    <div class="fixed inset-0 bg-black/50 backdrop-blur-sm"></div>
+    <div class="flex min-h-full items-center justify-center p-4">
+        <div class="relative bg-white dark:bg-[#1a2632] rounded-xl shadow-2xl w-full max-w-md">
+            <form id="form-stok" method="POST" action="">
+                {% csrf_token %}
+                <div class="p-6">
+                    <h3 id="modal-title" class="text-xl font-bold mb-4 dark:text-white">Kelola Stok</h3>
+                    <input type="hidden" name="id_barang" id="modal-id-barang">
+                    <div class="space-y-4">
+                        <input type="text" id="modal-nama-barang" readonly class="w-full bg-gray-100 dark:bg-gray-800 rounded-lg border-none text-sm">
+                        <input type="number" name="jumlah" required min="1" placeholder="Masukkan jumlah..." class="w-full rounded-lg border-gray-300 dark:bg-gray-700 dark:text-white">
+                    </div>
+                </div>
+                <div class="px-6 py-4 bg-gray-50 dark:bg-gray-800/50 flex flex-row-reverse gap-2 rounded-b-xl">
+                    <button type="submit" class="bg-primary text-white px-6 py-2 rounded-lg font-bold hover:bg-blue-600">Simpan</button>
+                    <button type="button" onclick="closeModal()" class="text-gray-500 font-bold px-4">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 </main>
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const savedAvatar = localStorage.getItem('userAvatar');
-        if (savedAvatar) {
-            document.querySelectorAll('.user-avatar-target').forEach(el => {
-                el.style.backgroundImage = `url('${savedAvatar}')`;
-            });
-        }
-    });
+function openModal(id, nama, tipe) {
+    const form = document.getElementById('form-stok');
+    const title = document.getElementById('modal-title');
+    
+    document.getElementById('modal-id-barang').value = id;
+    document.getElementById('modal-nama-barang').value = nama;
+    
+    // GANTI URL SECARA DINAMIS
+    if (tipe === 'tambah') {
+        form.action = "{% url 'tambah_stok' %}";
+        title.innerText = "Tambah Stok";
+    } else {
+        form.action = "{% url 'kurangi_stok' %}";
+        title.innerText = "Kurangi Stok";
+    }
+    
+    document.getElementById('modal-stok').classList.remove('hidden');
+}
+
+function closeModal() {
+    document.getElementById('modal-stok').classList.add('hidden');
+}
 </script>
 </body></html>

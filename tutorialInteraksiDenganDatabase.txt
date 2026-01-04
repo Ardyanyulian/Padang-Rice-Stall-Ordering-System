@@ -1,0 +1,94 @@
+===================================================================
+          KITAB SUCI DJANGO: WARUNG MS (MASTER WRAPPING)
+===================================================================
+
+1. BEDANE MODELS VS LOGIC CLASS (PENTING!)
+-------------------------------------------------------------------
+- DJANGO MODELS (models.py): 
+  Iki "Jembatan" neng Database. Isine mung struktur tabel (nama, stok, harga). 
+  Gak oleh diisi logika sing ribet-ribet.
+  
+- LOGIC CLASS (menu_display/logic/): 
+  Iki "Otak" aplikasi sing mbok gae dewe (Murni OOP). 
+  Isine method koyo tambahStok(), itungAset(), setNama(), dll.
+  Iki sing mbok pamerke neng dosen nek kowe paham OOP murni.
+
+2. CARA WRAPPING (MEMBUNGKUS DATA DB DADI OBJEK)
+-------------------------------------------------------------------
+Proses iki jenenge "Manual Mapping". Data seko Database dijupuk, 
+terus dilebokne (di-instansiasi) dadi Objek Class-mu.
+
+Contoh neng views.py:
+
+# 1. Ambil data mentah seko DB (Models)
+barang_db = BarangModel.objects.get(id='BRG01')
+
+# 2. WRAPPING: Bungkus data mentah dadi Objek Class (logic/Barang.py)
+# Iki carane "Manggil" Otak sing wis mbok gae
+objek_barang = BarangClass(
+    ID=barang_db.id, 
+    nama=barang_db.nama, 
+    stok=barang_db.stok, 
+    hargaBeli=barang_db.hargabeli, 
+    hargaJual=barang_db.hargajual
+)
+
+# 3. Saiki kowe iso nganggo method murni OOP-mu
+objek_barang.tambahStok(10)
+print(objek_barang.infoStok())
+
+3. STRUKTUR PATH & MEDIA (FIXED)
+-------------------------------------------------------------------
+- Proyek_Utama/
+    ├── manage.py
+    ├── media/               <-- (DI LUAR) Nggo simpen Foto/Upload-an
+    └── menu_display/
+        ├── logic/           <-- (ISINE CLASS MURNI: Barang, Admin, Assistant)
+        ├── static/          <-- (CSS & JS)
+        ├── templates/       <-- (HTML)
+        └── views.py         <-- (TEMPAT WRAPPING/NGGABUNGKE KABEH)
+
+4. CONTOH LOGIKA LOGIN & UPDATE (POST/FILES)
+-------------------------------------------------------------------
+def update_profile(request, ID):
+    if request.method == 'POST':
+        # 1. Njupuk data DB (Models)
+        p_db = Pegawai.objects.get(id_pegawai=ID)
+        
+        # 2. Wrapping neng Class sesuai Role (Admin/Assistant)
+        if request.session.get('hak') == 'admin':
+            user_obj = AdminClass(p_db.nama, p_db.password, p_db.nomor_telepon)
+        else:
+            user_obj = AssistantClass(p_db.nama, p_db.password, p_db.nomor_telepon)
+
+        # 3. Manipulasi nganggo SETTER (OOP Murni)
+        user_obj.setNama(request.POST.get('nama'))
+        
+        # 4. Balikke data Objek nuju DB (Save)
+        p_db.nama = user_obj.getNama()
+        
+        # Handle Media (Foto) neng jaba folder app
+        if request.FILES.get('foto'):
+            fs = FileSystemStorage()
+            file = request.FILES['foto']
+            filename = fs.save(f"pegawai/{ID}.jpg", file)
+            p_db.foto_profil = fs.url(filename)
+            
+        p_db.save()
+        return redirect('profile', ID=ID)
+
+5. TEMPLATE TAGS (NGGO TAMPILAN)
+-------------------------------------------------------------------
+- {% csrf_token %}    : Wajib neng njero <form> POST.
+- {{ data.url }}      : Cara nampilke file/foto seko folder Media.
+- {% url 'name' ID %} : Link Dinamis nuju path tartamtu.
+
+6. CARA RUNNING SERVER
+-------------------------------------------------------------------
+1. python manage.py runserver
+2. Buka: http://127.0.0.1:8000/
+
+7. RINGKASAN ALUR
+-------------------------------------------------------------------
+DB (Models) ---> Wrapping (Views) ---> Objek (Class Logic) ---> Render (HTML)
+===================================================================

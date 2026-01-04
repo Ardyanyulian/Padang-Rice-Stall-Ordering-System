@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Admin Profile - Warung Management System</title>
+<title>{{  hak }} Profile - Warung Kelontong</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
@@ -39,9 +38,7 @@
     (function() {
         const savedTheme = localStorage.getItem('theme') || 'light';
         const htmlElement = document.documentElement;
-        if (savedTheme === 'dark') {
-            htmlElement.classList.add('dark');
-        } else if (savedTheme === 'system') {
+        if (savedTheme === 'dark') {htmlElement.classList.add('dark');} else if (savedTheme === 'system') {
             if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 htmlElement.classList.add('dark');
             }
@@ -55,11 +52,11 @@
 <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#e5e7eb] dark:border-gray-800 bg-surface-light dark:bg-surface-dark px-6 py-4 sticky top-0 z-50 shadow-sm">
 <div class="flex items-center gap-4">
 <div class="size-10 flex items-center justify-center rounded-lg bg-primary/10 text-primary">
-<span class="material-symbols-outlined text-2xl">storefront</span>
+<span class="material-symbols-outlined text-2xl"><a href="{% url 'dashboard' %}">storefront</a></span>
 </div>
-<h2 class="text-[#111418] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] hidden sm:block">Warung Management System</h2>
+<h2 class="text-[#111418] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] hidden sm:block"><a href="{% url  'dashboard' %}">Manajemen warung Kelontong</a></h2>
 </div>
-<a href="{% url 'login' %}">
+<a href="{% url 'logout' %}">
 <button class="group flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#f0f2f4] dark:bg-gray-800 hover:bg-red-50 dark:hover:bg-red-900/20 text-[#111418] dark:text-white transition-all duration-200">
 <span class="material-symbols-outlined mr-2 text-xl text-gray-600 dark:text-gray-400 group-hover:text-red-600 dark:group-hover:text-red-400">logout</span>
 <span class="truncate text-sm font-bold leading-normal group-hover:text-red-600 dark:group-hover:text-red-400">Log Out</span>
@@ -70,72 +67,86 @@
 <div class="flex flex-1 justify-center py-8 px-4 sm:px-8">
 <div class="layout-content-container flex flex-col w-full max-w-[800px] gap-6">
 <div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-[#e5e7eb] dark:border-gray-800 p-8 flex flex-col items-center animate-fade-in-up">
+
+<!-- // Input foto -->
 <div class="relative group cursor-pointer">
-<div class="user-avatar-target bg-center bg-no-repeat bg-cover rounded-full h-32 w-32 shadow-md border-4 border-white dark:border-gray-700 transition-transform transform group-hover:scale-105" data-alt="Portrait of the administrator, Budi Santoso" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAOw-SdBT3DkoTrC6ENQ_k8pKEh3ZJ4WKNE3T6gSdFJ3gSFAwjlETwbwd8dzU6zMJgwd6n8Bqq6k1qIjIxqgPALUBVg7Cd1uhyQaxm1RC4xPP29YuakwA5WiHXxUIwA9_8jDxZJWVl8LHjFZLBI0NV5i-OeGK8u2Q-o75sL9g18FCWvZfytSTnEEA-9pk2RRDToxtPWcytmfAc_w85KfMuNEP0kZNciMiRlKDexAFvD3PKA0fKfp61IaOPkaRctgDS_uQBEYnkhai4I");'>
+<div class="user-avatar-target bg-center bg-no-repeat bg-cover rounded-full h-32 w-32 shadow-md border-4 border-white dark:border-gray-700 transition-transform transform group-hover:scale-105" data-alt="Gambar dari {{ pegawai.id_status.nama_status }} bernama {{ pegawai.nama }}" style="background-image: url('{{ request.session.foto|default:"/static/img/default-avatar.png" }}');">
 </div>
 <label for="avatar-upload" class="absolute bottom-1 right-1 bg-primary text-white rounded-full p-1.5 border-2 border-white dark:border-gray-700 flex items-center justify-center shadow-sm cursor-pointer hover:bg-blue-600 transition-colors">
 <span class="material-symbols-outlined text-sm font-bold">edit</span>
 </label>
-<input type="file" id="avatar-upload" class="hidden" accept="image/*">
+<input type="file" id="avatar-upload" class="hidden" accept="image/*" form="form-profil-utama" name="foto_input"/>
 </div>
+
 <div class="mt-4 flex flex-col items-center text-center">
-<h1 class="text-[#111418] dark:text-white text-2xl font-bold leading-tight tracking-tight">Budi Santoso</h1>
+<h1 class="text-[#111418] dark:text-white text-2xl font-bold leading-tight tracking-tight">{{ pegawai.nama }}</h1>
 <div class="mt-1 px-3 py-1 rounded-full bg-primary/10 dark:bg-primary/20">
-<p class="text-primary dark:text-blue-400 text-sm font-semibold tracking-wide uppercase">Admin Warung</p>
+<p class="text-primary dark:text-blue-400 text-sm font-semibold tracking-wide uppercase">{{ pegawai.id_status.nama_status }} Warung</p>
 </div>
 <p class="mt-4 text-[#617589] dark:text-gray-400 text-sm max-w-sm">
-                            Responsible for inventory tracking, daily sales reports, and system configuration.
+                            {{ pegawai.deskripsi }}
                         </p>
 </div>
 </div>
 <div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-[#e5e7eb] dark:border-gray-800 p-6 sm:p-8 animate-fade-in-up">
 <div class="mb-6">
-<h3 class="text-lg font-bold text-[#111418] dark:text-white">Edit Profile Information</h3>
-<p class="text-[#617589] dark:text-gray-400 text-sm mt-1">Update your login credentials and contact details.</p>
+<h3 class="text-lg font-bold text-[#111418] dark:text-white">Edit informasi profil</h3>
+<p class="text-[#617589] dark:text-gray-400 text-sm mt-1">Silahkan perbarui profil bila diperlukan</p>
 </div>
-<form class="flex flex-col gap-6" onsubmit="event.preventDefault();">
+<!-- //  -->
+<form id="form-profil-utama" class="flex flex-col gap-6" method="POST" action="{% url 'update_profil' ID %}" enctype="multipart/form-data">
+{% csrf_token %}
 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
 <div class="flex flex-col gap-2">
-<label class="text-sm font-bold text-[#111418] dark:text-gray-300">Login Name</label>
+<label class="text-sm font-bold text-[#111418] dark:text-gray-300">Nama </label>
 <div class="relative">
-<input class="form-input w-full rounded-lg border border-[#e5e7eb] dark:border-gray-700 bg-[#f9fafb] dark:bg-gray-900/50 px-4 py-2.5 text-[#111418] dark:text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-gray-400 text-sm" type="text" value="Budi Santoso"/>
+<input class="form-input w-full rounded-lg border border-[#e5e7eb] dark:border-gray-700 bg-[#f9fafb] dark:bg-gray-900/50 px-4 py-2.5 text-[#111418] dark:text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-gray-400 text-sm" type="text" value="{{ pegawai.nama }}" name="nama"/>
 </div>
 </div>
+
 <div class="flex flex-col gap-2">
-<label class="text-sm font-bold text-[#111418] dark:text-gray-300">Phone Number</label>
+<label class="text-sm font-bold text-[#111418] dark:text-gray-300">Nomor Telepon</label>
 <div class="relative">
-<input class="form-input w-full rounded-lg border border-[#e5e7eb] dark:border-gray-700 bg-[#f9fafb] dark:bg-gray-900/50 px-4 py-2.5 text-[#111418] dark:text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-gray-400 text-sm" type="tel" value="0812-3456-7890"/>
+<input class="form-input w-full rounded-lg border border-[#e5e7eb] dark:border-gray-700 bg-[#f9fafb] dark:bg-gray-900/50 px-4 py-2.5 text-[#111418] dark:text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-gray-400 text-sm" type="tel" value="{{ pegawai.nomor_telepon }}" name="nomorHp"/>
 </div>
 </div>
+
 <div class="flex flex-col gap-2 md:col-span-2">
-<label class="text-sm font-bold text-[#111418] dark:text-gray-300">Email</label>
+<label class="text-sm font-bold text-[#111418] dark:text-gray-300">Alamat Email</label>
 <div class="relative">
-<input class="form-input w-full rounded-lg border border-[#e5e7eb] dark:border-gray-700 bg-[#f9fafb] dark:bg-gray-900/50 px-4 py-2.5 text-[#111418] dark:text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-gray-400 text-sm" type="email" value="budi.santoso@warung.id"/>
+<input class="form-input w-full rounded-lg border border-[#e5e7eb] dark:border-gray-700 bg-[#f9fafb] dark:bg-gray-900/50 px-4 py-2.5 text-[#111418] dark:text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-gray-400 text-sm" type="email" value="{{ pegawai.email }}"/>
 </div>
 </div>
+
 <div class="flex flex-col gap-2 md:col-span-2 pt-2">
 <div class="h-px bg-[#e5e7eb] dark:bg-gray-800 w-full mb-2"></div>
-<h4 class="text-sm font-bold text-[#111418] dark:text-white mb-2">Change Password</h4>
+<h4 class="text-sm font-bold text-[#111418] dark:text-white mb-2">Ubah Sandi</h4>
 </div>
+
 <div class="flex flex-col gap-2 md:col-span-2">
-<label class="text-sm font-bold text-[#111418] dark:text-gray-300">Old Password</label>
+<label class="text-sm font-bold text-[#111418] dark:text-gray-300">Sandi Lama</label>
 <div class="relative">
-<input class="form-input w-full rounded-lg border border-[#e5e7eb] dark:border-gray-700 bg-[#f9fafb] dark:bg-gray-900/50 px-4 py-2.5 text-[#111418] dark:text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-gray-400 text-sm" placeholder="Enter current password" type="password"/>
+<input class="form-input w-full rounded-lg border border-[#e5e7eb] dark:border-gray-700 bg-[#f9fafb] dark:bg-gray-900/50 px-4 py-2.5 text-[#111418] dark:text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-gray-400 text-sm" placeholder="Enter current password" type="password" name="currentPassword"/>
 </div>
 </div>
+
 <div class="flex flex-col gap-2">
-<label class="text-sm font-bold text-[#111418] dark:text-gray-300">New Password</label>
+<label class="text-sm font-bold text-[#111418] dark:text-gray-300">Sandi baru</label>
 <div class="relative">
-<input class="form-input w-full rounded-lg border border-[#e5e7eb] dark:border-gray-700 bg-[#f9fafb] dark:bg-gray-900/50 px-4 py-2.5 text-[#111418] dark:text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-gray-400 text-sm" placeholder="Enter new password" type="password"/>
+<input class="form-input w-full rounded-lg border border-[#e5e7eb] dark:border-gray-700 bg-[#f9fafb] dark:bg-gray-900/50 px-4 py-2.5 text-[#111418] dark:text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-gray-400 text-sm" placeholder="Enter new password" type="password" name="newPassword"/>
 </div>
 </div>
+
 <div class="flex flex-col gap-2">
-<label class="text-sm font-bold text-[#111418] dark:text-gray-300">Confirm New Password</label>
+<label class="text-sm font-bold text-[#111418] dark:text-gray-300">Tulis Sandi Baru untuk Konfirmasi</label>
 <div class="relative">
-<input class="form-input w-full rounded-lg border border-[#e5e7eb] dark:border-gray-700 bg-[#f9fafb] dark:bg-gray-900/50 px-4 py-2.5 text-[#111418] dark:text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-gray-400 text-sm" placeholder="Re-enter new password" type="password"/>
+<input class="form-input w-full rounded-lg border border-[#e5e7eb] dark:border-gray-700 bg-[#f9fafb] dark:bg-gray-900/50 px-4 py-2.5 text-[#111418] dark:text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-gray-400 text-sm" placeholder="Re-enter new password" type="password" name="confirmNewPassword"/>
 </div>
 </div>
+
 </div>
+
 <div class="flex gap-3 justify-end pt-4 border-t border-[#e5e7eb] dark:border-gray-800 mt-2">
 <button class="cursor-pointer rounded-lg h-10 px-6 bg-[#f0f2f4] dark:bg-gray-800 text-[#111418] dark:text-white text-sm font-bold hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" type="button">
                 Cancel
@@ -144,6 +155,7 @@
                 Save Changes
             </button>
 </div>
+
 </form>
 </div>
 <h3 class="text-lg font-bold text-[#111418] dark:text-white px-2 mt-2">Control Panel</h3>
@@ -154,21 +166,22 @@
 </div>
 <div class="flex flex-col gap-1">
 <h2 class="text-[#111418] dark:text-white text-base font-bold leading-tight group-hover:text-primary transition-colors">Kelola Barang</h2>
-<p class="text-[#617589] dark:text-gray-400 text-xs">Update stock, add items, and pricing.</p>
+<p class="text-[#617589] dark:text-gray-400 text-xs">Melihat/menambah stok, item, mengapus barang, atau mengubah harga</p>
 </div>
 </a>
 <a href="{% url 'laporan' %}" class="group flex flex-col sm:items-center sm:text-center text-left gap-4 rounded-xl border border-[#e5e7eb] dark:border-gray-700 bg-surface-light dark:bg-surface-dark p-6 hover:border-primary hover:shadow-md transition-all duration-200">
 <div class="p-3 rounded-full bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400 group-hover:scale-110 transition-transform duration-200">
-<span class="material-symbols-outlined text-3xl">analytics</span>
-</div>
+<span class="material-symbols-outlined text-3xl">bar_chart</span>
+</div><!-- ) expected -->
 <div class="flex flex-col gap-1">
 <h2 class="text-[#111418] dark:text-white text-base font-bold leading-tight group-hover:text-primary transition-colors">Lihat Laporan</h2>
-<p class="text-[#617589] dark:text-gray-400 text-xs">Sales analytics and daily revenue.</p>
+<p class="text-[#617589] dark:text-gray-400 text-xs">Hasil analisa penjualan dan laporan keuangan.</p>
 </div>
 </a>
 </div>
 <div class="mt-2 p-4 rounded-lg bg-yellow-50 dark:bg-yellow-900/10 border border-yellow-100 dark:border-yellow-900/30 flex gap-3 items-start">
 <span class="material-symbols-outlined text-yellow-600 dark:text-yellow-500 shrink-0">info</span>
+
 <div>
 <h4 class="text-sm font-bold text-yellow-800 dark:text-yellow-500">System Notice</h4>
 <p class="text-xs text-yellow-700 dark:text-yellow-600/80 mt-1">
@@ -196,23 +209,26 @@
 
         // Handle upload
         const avatarInput = document.getElementById('avatar-upload');
-        if (avatarInput) {
-            avatarInput.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const result = e.target.result;
-                        localStorage.setItem('userAvatar', result);
-                        // Update immediately on current page
-                        document.querySelectorAll('.user-avatar-target').forEach(el => {
-                            el.style.backgroundImage = `url('${result}')`;
-                        });
-                    }
-                    reader.readAsDataURL(file);
-                }
+            avatarInput.addEventListener('change', function() {
+                    const formData = new FormData();
+                    formData.append('foto_input', this.files[0]);
+                    formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+                    // Kirim ke URL khusus upload foto saja
+                    fetch("{% url 'upload_foto_saja' ID %}", {
+                        method: 'POST',
+                        body: formData
+                    })
+
+                    .then(response => response.json())
+                    .then(data => {
+                        alert("Foto berhasil diperbarui!");
+                        // Update tampilan avatar
+                        document.querySelector('.user-avatar-target').style.backgroundImage = `url('${data.url}')`;
+                        location.reload();
             });
-        }
+        });
     });
 </script>
-</body></html>
+</body>
+</html>

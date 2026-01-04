@@ -75,8 +75,8 @@
 <!-- <button class="flex items-center justify-center size-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-[#617589] dark:text-gray-400 transition-colors">
 <span class="material-symbols-outlined">notifications</span>
 </button> -->
-<a href="{% url 'profile' %}">
-<div class="user-avatar-target bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-white dark:ring-gray-800" data-alt="User profile avatar showing a smiling person" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAOw-SdBT3DkoTrC6ENQ_k8pKEh3ZJ4WKNE3T6gSdFJ3gSFAwjlETwbwd8dzU6zMJgwd6n8Bqq6k1qIjIxqgPALUBVg7Cd1uhyQaxm1RC4xPP29YuakwA5WiHXxUIwA9_8jDxZJWVl8LHjFZLBI0NV5i-OeGK8u2Q-o75sL9g18FCWvZfytSTnEEA-9pk2RRDToxtPWcytmfAc_w85KfMuNEP0kZNciMiRlKDexAFvD3PKA0fKfp61IaOPkaRctgDS_uQBEYnkhai4I");'></div>
+<a href="{% url 'profile' request.session.ID %}">
+<div class="user-avatar-target bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-white dark:ring-gray-800" data-alt="User profile avatar showing a smiling person" style="background-image: url('{{ request.session.foto|default:'/media/pegawai/default-avatar.png' }}');"></div>
 </a>
 </div>
 </div>
@@ -113,21 +113,21 @@
 </div>
 <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
 <!-- Shop Name Input -->
-<label class="flex flex-col gap-2">
+{% comment %} <label class="flex flex-col gap-2">
 <span class="text-[#111418] dark:text-gray-200 text-sm font-medium">Nama Warung</span>
 <div class="relative">
 <input class="w-full rounded-lg border border-[#dbe0e6] dark:border-gray-600 bg-white dark:bg-[#101922] px-4 py-3 text-[#111418] dark:text-white placeholder-[#617589] focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all" placeholder="Masukkan nama warung" type="text" value=""/>
 <span class="material-symbols-outlined absolute right-3 top-3 text-[#617589] dark:text-gray-500 pointer-events-none">edit</span>
 </div>
-</label>
+</label> {% endcomment %}
 <!-- Shop Phone Input -->
-<label class="flex flex-col gap-2">
+{% comment %} <label class="flex flex-col gap-2">
 <span class="text-[#111418] dark:text-gray-200 text-sm font-medium">Nomer Telepon</span>
 <div class="relative">
 <input class="w-full rounded-lg border border-[#dbe0e6] dark:border-gray-600 bg-white dark:bg-[#101922] px-4 py-3 text-[#111418] dark:text-white placeholder-[#617589] focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all" placeholder="Masukkan nomor telepon" type="tel" value=""/>
 <span class="material-symbols-outlined absolute right-3 top-3 text-[#617589] dark:text-gray-500 pointer-events-none">call</span>
 </div>
-</label>
+</label> {% endcomment %}
 <!-- Location Input (Full Width) -->
 <label class="flex flex-col gap-2 md:col-span-2">
 <span class="text-[#111418] dark:text-gray-200 text-sm font-medium">Shop Location</span>
