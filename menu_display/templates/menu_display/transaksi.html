@@ -75,7 +75,8 @@
 <div class="size-8 flex items-center justify-center text-primary">
 <span class="material-symbols-outlined !text-[32px]">storefront</span>
 </div>
-<h2 class="text-[#111418] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Warung POS</h2>
+<!-- <h2 class="text-[#111418] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Warung POS</h2> -->
+<a href="{% url 'dashboard' %}" class="text-lg font-bold leading-tight tracking-[-0.015em]font-bold text-white-500 dark:text-white-400 hover:text-primary transition-colors">Toko Kelontong Eni</a>
 </div>
 <div class="flex flex-1 justify-end gap-8">
 <div class="hidden md:flex items-center gap-9">
@@ -108,6 +109,7 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 <label class="flex flex-col gap-2">
 <span class="text-[#111418] dark:text-gray-200 text-sm font-medium leading-normal">Nama Pembeli</span>
+<form action="{% url 'tambah_transaksi' %}" method="POST" class="flex flex-col gap-2"></form>
 <div class="relative">
 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 !text-[20px]">person</span>
 <input class="form-input flex w-full rounded-lg border border-[#dbe0e6] dark:border-gray-600 bg-white dark:bg-gray-800 text-[#111418] dark:text-white h-11 pl-10 pr-4 placeholder:text-[#617589] dark:placeholder:text-gray-500 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="Masukkan nama pelanggan" type="text" value="Budi Santoso"/>
@@ -115,6 +117,7 @@
 </label>
 <label class="flex flex-col gap-2">
 <span class="text-[#111418] dark:text-gray-200 text-sm font-medium leading-normal">Tanggal Transaksi</span>
+<form action="{% url 'tambah_transaksi' %}" method="POST" class="flex flex-col gap-2"></form>
 <div class="relative">
 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 !text-[20px]">calendar_today</span>
 <input class="form-input flex w-full rounded-lg border border-[#dbe0e6] dark:border-gray-600 bg-white dark:bg-gray-800 text-[#111418] dark:text-white h-11 pl-10 pr-4 placeholder:text-[#617589] dark:placeholder:text-gray-500 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" type="date" value="2023-10-27"/>
@@ -267,14 +270,14 @@
 </div>
 </div>
 <div class="grid grid-cols-2 gap-3">
-<button class="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-[#dbe0e6] dark:border-gray-600 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-[#111418] dark:text-white text-sm font-bold transition-all shadow-sm">
+<!-- <button class="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-[#dbe0e6] dark:border-gray-600 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-[#111418] dark:text-white text-sm font-bold transition-all shadow-sm">
 <span class="material-symbols-outlined !text-[20px]">print</span>
 <span>Cetak Nota</span>
-</button>
-<button class="flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-primary hover:bg-blue-600 text-white text-sm font-bold shadow-md shadow-blue-200 dark:shadow-none transition-all">
+</button> -->
+<!-- <button class="flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-primary hover:bg-blue-600 text-white text-sm font-bold shadow-md shadow-blue-200 dark:shadow-none transition-all">
 <span class="material-symbols-outlined !text-[20px]">save</span>
 <span>Simpan Nota</span>
-</button>
+</button> -->
 </div>
 </div>
 </div>

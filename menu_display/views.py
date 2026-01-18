@@ -12,7 +12,7 @@ from .logic.Admin import Admin as AdminClass
 from .logic.Assistant import Assistant as AssistantClass
 
 # Import Model DB & Algoritma
-from .models import Pegawai, Barang as BarangModel
+from .models import Pegawai, Barang as BarangModel, Transaksi
 from .logic.Algorithms import quicksort
 
 # menu_display/views.py
@@ -347,7 +347,6 @@ def tampilkan_transaksi(request):
     return render(request, 'menu_display/transaksi.html')
 
 
-
 def tampilkan_settings(request):
     nama = request.session.get('username')
     
@@ -379,4 +378,38 @@ def tampilkan_manage(request):
         return redirect('login')
     
     return render(request, 'menu_display/manage.html' )
+
+def tambah_transaksi(request):
+    if request.method == "POST":
+        # Ambil data dari form (perhatikan string di dalam .get)
+        nama_pembeli = request.POST.get('nama_pembeli')
+        tanggal_input = request.POST.get('tanggal')
+        total_input = request.POST.get('totalHarga')
+        id_pegawai_input = request.POST.get('id_pegawai')
+
+        # Simpan ke Database
+        Transaksi.objects.create(
+            nama_pembeli=nama_pembeli,
+            tanggal=tanggal_input,
+            total_harga=float(total_input),
+            id_pegawai_id=int(id_pegawai_input)  # Pastikan ini sesuai dengan ForeignKey di model
+        )
+
+def tampilkan_detail_transaksi(request, id_transaksi):
+    nama = request.session.get('username')
+    
+    if not nama:
+        return redirect('login')
+    
+    transaksi_db = Transaksi.objects.get(id_transaksi=id_transaksi)
+    
+
+    
+    context = {
+        'transaksi': transaksi_db
+    }
+    
+    return render(request, 'menu_display/laporan.html', context)
+
+
 

@@ -85,8 +85,11 @@ def update_profile(request, ID):
 
 6. CARA RUNNING SERVER
 -------------------------------------------------------------------
-1. python manage.py runserver
-2. Buka: http://127.0.0.1:8000/
+1. jika powershells Get-Content db_groceryStore.sql | main.db
+2. python manage.py makemigrations
+3. python manage.py migrate
+4. python manage.py runserver
+5. Buka: http://127.0.0.1:8000/
 
 7. RINGKASAN ALUR
 -------------------------------------------------------------------

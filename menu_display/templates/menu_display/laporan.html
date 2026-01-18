@@ -73,41 +73,35 @@
 <body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white overflow-x-hidden min-h-screen flex flex-col">
 <!-- TopNavBar -->
 <header class="sticky top-0 z-50 bg-white dark:bg-[#1A2633] border-b border-slate-200 dark:border-slate-800 px-4 sm:px-10 py-3">
-<div class="flex items-center justify-between whitespace-nowrap">
-<div class="flex items-center gap-8">
-<div class="flex items-center gap-4 text-slate-900 dark:text-white">
-<div class="size-8 flex items-center justify-center rounded bg-primary/10 text-primary">
-<span class="material-symbols-outlined">storefront</span>
-</div>
-<h2 class="text-lg font-bold leading-tight tracking-[-0.015em] hidden sm:block">Warung OS</h2>
-</div>
-<nav class="hidden md:flex items-center gap-6 lg:gap-9">
-<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary text-sm font-medium leading-normal transition-colors" href="{% url 'dashboard' %}">Dashboard</a>
-<!-- <a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Kasir</a>
-<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Stok</a> -->
-<a class="text-primary font-bold text-sm leading-normal" href="{% url 'laporan' %}">Laporan</a>
-<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary text-sm font-medium leading-normal transition-colors" href="{% url 'settings' %}">Pengaturan</a>
-</nav>
-</div>
-<div class="flex items-center justify-end gap-4 sm:gap-8">
-<label class="hidden sm:flex flex-col min-w-40 !h-10 max-w-64">
-<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
-<div class="text-slate-500 dark:text-slate-400 flex border-none bg-slate-100 dark:bg-slate-800 items-center justify-center pl-4 rounded-l-lg border-r-0">
-<span class="material-symbols-outlined text-[20px]">search</span>
-</div>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-0 border-none bg-slate-100 dark:bg-slate-800 focus:border-none h-full placeholder:text-slate-500 dark:placeholder:text-slate-400 px-4 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal" placeholder="Cari laporan..." value=""/>
-</div>
-</label>
-<!-- <div class="flex items-center gap-2">
-<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-400">
-<span class="material-symbols-outlined">notifications</span>
-</button> -->
-<a href="{% url 'profile' request.session.ID %}">
-<div class="user-avatar-target bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-slate-200 dark:border-slate-700" data-alt="User avatar profile picture" style="background-image: url('{{ request.session.foto|default:'/static/img/default-avatar.png' }}');"></div>
-</a>
-</div>
-</div>
-</div>
+  <div class="flex items-center justify-between">
+    
+    <div class="flex items-center gap-3 text-slate-900 dark:text-white">
+      <div class="size-8 flex items-center justify-center rounded bg-primary/10 text-primary">
+        <span class="material-symbols-outlined">storefront</span>
+      </div>
+      <a class="text-[#111418] dark:text-white text-lg font-bold leading-tight tracking-tight hover:text-primary transition-colors" href="{% url 'dashboard' %}">
+        Toko Kelontong Eni
+      </a>
+    </div>
+
+    <div class="flex items-center gap-6 lg:gap-9">
+      <nav class="hidden md:flex items-center gap-6 lg:gap-8">
+        <a class="text-slate-600 dark:text-slate-400 hover:text-primary text-sm font-medium transition-colors" href="{% url 'dashboard' %}">Dashboard</a>
+        <a class="text-primary font-bold text-sm" href="{% url 'laporan' %}">Laporan</a>
+        <a class="text-slate-600 dark:text-slate-400 hover:text-primary text-sm font-medium transition-colors" href="{% url 'settings' %}">Pengaturan</a>
+      </nav>
+
+      <div class="hidden md:block w-px h-6 bg-slate-200 dark:bg-slate-700"></div>
+
+      <a href="{% url 'profile' request.session.ID %}" class="flex-shrink-0">
+        <div 
+          class="bg-center bg-no-repeat bg-cover rounded-full size-10 border border-slate-200 dark:border-slate-700 hover:ring-2 hover:ring-primary/20 transition-all" 
+          style="background-image: url('{{ request.session.foto|default:'/static/img/default-avatar.png' }}');">
+        </div>
+      </a>
+    </div>
+
+  </div>
 </header>
 <div class="layout-container flex h-full grow flex-col w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
 <div class="flex flex-col lg:flex-row gap-6 h-full">
@@ -172,33 +166,63 @@
 <p class="text-slate-500 dark:text-slate-400">Ringkasan performa bisnis dan analisis penjualan harian.</p>
 </div>
 <div class="flex items-center gap-3">
-<button class="hidden sm:flex h-10 items-center justify-center px-4 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1A2633] text-slate-700 dark:text-slate-200 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<!-- <button class="hidden sm:flex h-10 items-center justify-center px-4 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1A2633] text-slate-700 dark:text-slate-200 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
 <span class="material-symbols-outlined text-[20px] mr-2">print</span>
                             Print
-                        </button>
-<button class="flex h-10 items-center justify-center px-4 rounded-lg bg-primary text-white text-sm font-bold hover:bg-blue-600 transition-colors shadow-md shadow-blue-500/20">
+                        </button> -->
+<!-- <button class="flex h-10 items-center justify-center px-4 rounded-lg bg-primary text-white text-sm font-bold hover:bg-blue-600 transition-colors shadow-md shadow-blue-500/20">
 <span class="material-symbols-outlined text-[20px] mr-2">autorenew</span>
                             Generate Report
-                        </button>
+                        </button> -->
 </div>
 </div>
 <!-- Date Range Slider Visualization -->
 <div class="bg-white dark:bg-[#1A2633] rounded-xl border border-slate-200 dark:border-slate-800 p-4 sm:p-6 shadow-sm">
 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
 <h3 class="font-bold text-slate-900 dark:text-white">Rentang Tanggal</h3>
-<div class="flex gap-2">
+<!-- <div class="flex gap-2">
 <button class="px-3 py-1 text-xs font-medium rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors">Minggu Ini</button>
 <button class="px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary ring-1 ring-primary/20">Bulan Ini</button>
 <button class="px-3 py-1 text-xs font-medium rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors">Tahun Ini</button>
+</div> -->
 </div>
-</div>
-<div class="relative pt-6 pb-2 px-2">
-<div class="h-2 bg-slate-100 dark:bg-slate-700 rounded-full w-full">
-<div class="absolute top-6 h-2 bg-primary rounded-full left-[0%] right-[0%]"></div>
-<!-- Start Thumb -->
-<div class="absolute top-3 left-[0%] -ml-3 flex flex-col items-center gap-1 group cursor-pointer">
-<div class="size-6 bg-white dark:bg-slate-800 border-2 border-primary rounded-full shadow-sm group-hover:scale-110 transition-transform"></div>
-<span class="text-xs font-bold text-slate-900 dark:text-white mt-1">1 Okt</span>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
+    <!-- Tanggal Mulai -->
+    <div class="flex flex-col gap-1">
+        <label class="text-sm font-medium text-slate-600 dark:text-slate-400">
+            Tanggal Mulai
+        </label>
+        <input
+            type="date"
+            name="tanggal_mulai"
+            class="form-input rounded-lg border-slate-200 dark:border-slate-700 
+                   bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white
+                   focus:ring-primary focus:border-primary"
+        />
+    </div>
+
+    <!-- Tanggal Akhir -->
+    <div class="flex flex-col gap-1">
+        <label class="text-sm font-medium text-slate-600 dark:text-slate-400">
+            Tanggal Akhir
+        </label>
+        <input
+            type="date"
+            name="tanggal_akhir"
+            class="form-input rounded-lg border-slate-200 dark:border-slate-700 
+                   bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white
+                   focus:ring-primary focus:border-primary"
+        />
+    </div>
+
+    <!-- Tombol Terapkan -->
+    <div class="flex items-end">
+        <button
+            class="w-full h-10 rounded-lg bg-primary text-white text-sm font-bold
+                   hover:bg-blue-600 transition-colors">
+            Terapkan
+        </button>
+    </div>
 </div>
 <!-- End Thumb -->
 <div class="absolute top-3 right-[0%] -mr-3 flex flex-col items-center gap-1 group cursor-pointer">
@@ -208,62 +232,60 @@
 </div>
 </div>
 </div>
-<!-- Stats Grid -->
-<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-<!-- Stat Card 1 -->
-<div class="bg-white dark:bg-[#1A2633] p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-1">
-<div class="flex items-center justify-between mb-2">
-<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Pendapatan</p>
-<div class="size-8 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center">
-<span class="material-symbols-outlined text-[18px]">payments</span>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+    <div class="bg-white dark:bg-[#1A2633] p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow group">
+        <div class="flex items-center justify-between mb-4">
+            <div class="size-12 rounded-lg bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-[28px]">payments</span>
+            </div>
+            <span class="text-xs font-bold text-green-600 bg-green-50 dark:bg-green-900/30 px-2 py-1 rounded">Bulanan</span>
+        </div>
+        <div>
+            <p class="text-slate-500 dark:text-slate-400 text-sm font-semibold uppercase tracking-wider">Total Pendapatan</p>
+            <h3 class="text-2xl font-black text-slate-900 dark:text-white mt-1">Rp 15.450.000</h3>
+        </div>
+    </div>
+
+    <div class="bg-white dark:bg-[#1A2633] p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow group">
+        <div class="flex items-center justify-between mb-4">
+            <div class="size-12 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-[28px]">receipt_long</span>
+            </div>
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded">Aktif</span>
+        </div>
+        <div>
+            <p class="text-slate-500 dark:text-slate-400 text-sm font-semibold uppercase tracking-wider">Total Transaksi</p>
+            <h3 class="text-2xl font-black text-slate-900 dark:text-white mt-1">1.242</h3>
+        </div>
+    </div>
+
+    <div class="bg-white dark:bg-[#1A2633] p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow group">
+        <div class="flex items-center justify-between mb-4">
+            <div class="size-12 rounded-lg bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-[28px]">savings</span>
+            </div>
+            <span class="text-xs font-bold text-purple-600 bg-purple-50 dark:bg-purple-900/30 px-2 py-1 rounded">Margin 31%</span>
+        </div>
+        <div>
+            <p class="text-slate-500 dark:text-slate-400 text-sm font-semibold uppercase tracking-wider">Laba Bersih</p>
+            <h3 class="text-2xl font-black text-slate-900 dark:text-white mt-1">Rp 4.800.000</h3>
+        </div>
+    </div>
+
+    <div class="bg-white dark:bg-[#1A2633] p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow group">
+        <div class="flex items-center justify-between mb-4">
+            <div class="size-12 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-[28px]">warning</span>
+            </div>
+            <div class="flex h-2 w-2 rounded-full bg-red-500 animate-pulse"></div>
+        </div>
+        <div>
+            <p class="text-slate-500 dark:text-slate-400 text-sm font-semibold uppercase tracking-wider">Stok Menipis</p>
+            <h3 class="text-2xl font-black text-slate-900 dark:text-white mt-1">5 Item</h3>
+        </div>
+    </div>
 </div>
-</div>
-<p class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Rp 15.450.000</p>
-<div class="flex items-center gap-1 text-green-600 dark:text-green-400 text-sm font-medium mt-1">
-<!-- <span class="material-symbols-outlined text-[16px]">trending_up</span>
-<span>+12%</span>
-<span class="text-slate-400 dark:text-slate-500 font-normal ml-1">vs bulan lalu</span> -->
-</div>
-</div>
-<!-- Stat Card 2 -->
-<div class="bg-white dark:bg-[#1A2633] p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-1">
-<div class="flex items-center justify-between mb-2">
-<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Transaksi</p>
-<div class="size-8 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center">
-<span class="material-symbols-outlined text-[18px]">receipt_long</span>
-</div>
-</div>
-<p class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">1,242</p>
-<div class="flex items-center gap-1 text-green-600 dark:text-green-400 text-sm font-medium mt-1">
-<!-- <span class="material-symbols-outlined text-[16px]">trending_down</span> -->
-<!-- <span>-5.2%</span>
-<span class="text-slate-400 dark:text-slate-500 font-normal ml-1">vs bulan lalu</span> -->
-</div>
-</div>
-<!-- Stat Card 3 -->
-<div class="bg-white dark:bg-[#1A2633] p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-1">
-<div class="flex items-center justify-between mb-2">
-<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Laba Bersih</p>
-<div class="size-8 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center">
-<span class="material-symbols-outlined text-[18px]">savings</span>
-</div>
-</div>
-<p class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Rp 4.800.000</p>
-<div class="flex items-center gap-1 text-green-600 dark:text-green-400 text-sm font-medium mt-1">
-<!-- <span class="material-symbols-outlined text-[16px]">trending_up</span>
-<span>+8%</span>
-<span class="text-slate-400 dark:text-slate-500 font-normal ml-1">margin stabil</span> -->
-</div>
-</div>
-<!-- Stat Card 4 -->
-<div class="bg-white dark:bg-[#1A2633] p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-1">
-<div class="flex items-center justify-between mb-2">
-<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Stok Menipis</p>
-<div class="size-8 rounded-full bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 flex items-center justify-center">
-<span class="material-symbols-outlined text-[18px]">warning</span>
-</div>
-</div>
-<p class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">5 Item</p>
+<!-- <p class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">5 Item</p> -->
 <div class="flex items-center gap-1 text-red-600 dark:text-red-400 text-sm font-medium mt-1">
 <!-- <span class="material-symbols-outlined text-[16px]">trending_down</span>
 <span>-2%</span>
@@ -274,23 +296,23 @@
 <!-- Charts Section -->
 <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
 <!-- Main Chart (Sales Trend) -->
-<div class="xl:col-span-2 bg-white dark:bg-[#1A2633] p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col h-full">
+<div class="mt-10 xl:col-span-2 bg-white dark:bg-[#1A2633] p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col h-full">
 <div class="flex items-center justify-between mb-6">
 <div>
 <h3 class="font-bold text-lg text-slate-900 dark:text-white">Tren Penjualan Harian</h3>
 <p class="text-sm text-slate-500 dark:text-slate-400">Oktober 2023</p>
 </div>
-<button class="text-primary text-sm font-bold hover:underline">Lihat Detail</button>
+<!-- <button class="text-primary text-sm font-bold hover:underline">Lihat Detail</button> -->
 </div>
 <!-- CSS Bar Chart Implementation -->
 <div class="flex-1 w-full min-h-[240px] flex items-end justify-between gap-2 sm:gap-4 px-2">
-<!-- Y-Axis Labels (Visual Only) -->
+<!-- Y-Axis Labels (Visual Only)
 <div class="hidden sm:flex flex-col justify-between h-full text-xs text-slate-400 dark:text-slate-500 py-1 absolute left-6 pointer-events-none opacity-50">
 <span>3jt</span>
 <span>2jt</span>
 <span>1jt</span>
 <span>0</span>
-</div>
+</div> -->
 <!-- Bar Items -->
 <div class="flex flex-col items-center justify-end w-full h-full gap-2 group">
 <div class="w-full bg-blue-100 dark:bg-blue-900/20 rounded-t-sm h-[40%] relative group-hover:bg-primary transition-colors">
@@ -331,7 +353,7 @@
 </div>
 </div>
 <!-- Secondary Chart (Categories) -->
-<div class="bg-white dark:bg-[#1A2633] p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col h-full">
+<div class="mt-10 dark:bg-[#1A2633] p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col h-full">
 <h3 class="font-bold text-lg text-slate-900 dark:text-white mb-6">Kategori Terlaris</h3>
 <div class="flex-1 flex flex-col items-center justify-center gap-6">
 <!-- CSS Donut Chart -->
@@ -368,8 +390,8 @@
 </div>
 </div>
 <!-- Transaction Details Table -->
-<div class="bg-white dark:bg-[#1A2633] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col">
-<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="mt-20 bg-white dark:bg-[#1A2633] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col">
+<div class="py-4 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
 <h3 class="font-bold text-lg text-slate-900 dark:text-white">Rincian Transaksi</h3>
 <div class="flex gap-3">
 <button class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
