@@ -5,14 +5,21 @@ from django.http import JsonResponse
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.core.paginator import Paginator
+from datetime import datetime
 
 # Import Class 
 from .logic.Barang import Barang as BarangClass
 from .logic.Admin import Admin as AdminClass
 from .logic.Assistant import Assistant as AssistantClass
+from .logic.Transaksi import Transaksi as TransaksiClass
+from .logic.Detail_Transaksi import Detail_Transaksi as DetailTransaksiClass
 
 # Import Model DB & Algoritma
-from .models import Pegawai, Barang as BarangModel, Transaksi
+from .models import Barang as BarangModel
+from .models import Pegawai as PegawaiModel
+from .models import Transaksi as TransaksiModel
+from .models import DetailTransaksi as DetailModel
+
 from .logic.Algorithms import quicksort
 
 # menu_display/views.py
@@ -59,36 +66,25 @@ def tampilkan_about(request):
 
 def tampilkan_dashboard(request):
     nama = request.session.get('username')
-    
     if not nama:
         return redirect('login')
     
     barangMentah = BarangModel.objects.all()
-    
     daftarBarang = []
     total_aset_warung = 0
     jumlah_stok_rendah = 0
 
     for barang in barangMentah:
-        # 1. Instansiasi ke Class OOP
-        # Pastikan parameter (ID, nama, dll) urutannya sesuai dengan __init__ di BarangClass
         barangOOP = BarangClass(
-            barang.id,        # Pakai .id (kecil) sesuai modelmu
+            barang.id,
             barang.nama,
             barang.stok,
             barang.hargabeli,
             barang.hargajual
         )
-        
-        # 2. Hitung Total Aset (akumulasi harga jual * stok)
-        # Gunakan method dari class jika ada, atau hitung manual
-        total_aset_barang = int(barang.stok) * int(barang.hargajual)
-        total_aset_warung += total_aset_barang
-        
-        # 3. Cek Stok Rendah (akumulasi jumlah barang yang mau habis)
+        total_aset_warung += (int(barang.stok) * int(barang.hargajual))
         if barang.stok < 10:
             jumlah_stok_rendah += 1
-            
         daftarBarang.append(barangOOP)
      
     context = {
@@ -98,7 +94,6 @@ def tampilkan_dashboard(request):
         'username': nama,
         'hak': request.session.get('hak')
     }
-    
     return render(request, 'menu_display/dashboard.html', context)
 
 #================================LOGIKA LOGIN=====================================
@@ -110,24 +105,20 @@ def tampilkan_login(request):
         username_input = request.POST.get('nama')
         password_input = request.POST.get('password')
 
-        pegawai_db = Pegawai.objects.filter(nama=username_input, password=password_input).first()
+        pegawai_db = PegawaiModel.objects.filter(nama=username_input, password=password_input).first()
         
         if pegawai_db:
-            # PROSES OOP: Cek Role dan Instansiasi Class yang sesuai
-            role = pegawai_db.id_status.nama_status.lower() # 'admin' atau 'assistant'
-            
+            role = pegawai_db.id_status.nama_status.lower() 
             if role == 'admin':
                 user_obj = AdminClass(pegawai_db.nama, pegawai_db.password, pegawai_db.nomor_telepon)
             else:
                 user_obj = AssistantClass(pegawai_db.nama, pegawai_db.password, pegawai_db.nomor_telepon)
 
-            # Simpan data dari Objek ke Session
             request.session['ID'] = pegawai_db.id_pegawai
             request.session['username'] = user_obj.getNama()
             request.session['hak'] = role
             request.session['nomorHp'] = user_obj.getNomorTelepon()
             request.session['foto'] = pegawai_db.foto_profil
-            
             return redirect('dashboard')
             
     return render(request, 'menu_display/login.html')
@@ -137,59 +128,34 @@ def tampilkan_profile(request, ID):
     if not request.session.get('username'):
         return redirect('login')
     
-    # Ambil data terbaru langsung dari DB berdasarkan ID di URL
-    pegawai = Pegawai.objects.get(id_pegawai=ID)
-    
-    context = {
-        'ID': ID,
-        'pegawai': pegawai, # Gunakan ini di HTML: {{ pegawai.nama }}, {{ pegawai.email }}
-    }
+    # PERBAIKAN: Gunakan PegawaiModel
+    pegawai = PegawaiModel.objects.get(id_pegawai=ID)
+    context = {'ID': ID, 'pegawai': pegawai}
     return render(request, 'menu_display/profile.html', context)
 
 def tampilkan_logout(request):
     request.session.clear()
     return redirect('login')
 
-def update(request, ID):
+def update_profile(request, ID):
     if request.method == 'POST':
-        p_db = Pegawai.objects.get(id_pegawai=ID)
+        p_db = PegawaiModel.objects.get(id_pegawai=ID) # PERBAIKAN: PegawaiModel
         role = request.session.get('hak')
 
-        # 1. Instansiasi objek berdasarkan role dari session
         if role == 'admin':
             user_obj = AdminClass(p_db.nama, p_db.password, p_db.nomor_telepon)
         else:
             user_obj = AssistantClass(p_db.nama, p_db.password, p_db.nomor_telepon)
 
-        # 2. Update data objek menggunakan SETTER
-        nama_input = request.POST.get('nama')
-        if nama_input:
-            user_obj.setNama(nama_input)
-            request.session['username'] = user_obj.getNama()
-
-        nomor_input = request.POST.get('nomorHp')
-        if nomor_input:
-            user_obj.setNomorTelepon(nomor_input)
-            request.session['nomorHp'] = user_obj.getNomorTelepon()
-
-        newpw = request.POST.get('newPassword')
-        if newpw and newpw == request.POST.get('confirmNewPassword'):
-            user_obj.setPassword(newpw)
-
-        # 3. Kembalikan data dari Objek ke Model untuk di-save ke DB
+        # Update via Setter Logic
+        user_obj.setNama(request.POST.get('nama'))
+        user_obj.setNomorTelepon(request.POST.get('nomorHp'))
+        
         p_db.nama = user_obj.getNama()
         p_db.nomor_telepon = user_obj.getNomorTelepon()
-        p_db.password = user_obj.getPassword()
-
-        # Handle Foto (Tetap prosedural karena melibatkan File System)
-        if request.FILES.get('foto_input'):
-            foto = request.FILES.get('foto_input')
-            fs = FileSystemStorage()
-            filename = fs.save(f"pegawai/{ID}_{int(time.time())}{os.path.splitext(foto.name)[1]}", foto)
-            p_db.foto_profil = fs.url(filename)
-            request.session['foto'] = p_db.foto_profil
-
         p_db.save()
+        
+        request.session['username'] = p_db.nama
         return redirect('profile', ID=ID)
 
 def upload_foto_saja(request, ID):
@@ -210,7 +176,7 @@ def upload_foto_saja(request, ID):
             file_url = fs.url(filename)
 
             # Update Database
-            pegawai = Pegawai.objects.get(id_pegawai=ID)
+            pegawai = PegawaiModel.objects.get(id_pegawai=ID)
             pegawai.foto_profil = file_url
             pegawai.save()
 
@@ -293,7 +259,7 @@ def tambah_barang(request):
         )
         return redirect('gudang')
     
-    return redirect('tambah') # Jika bukan POST balik ke form
+    return redirect('tambah-barang') # Jika bukan POST balik ke form
 
 def tambahStok(request):
     if request.method == "POST":
@@ -327,7 +293,7 @@ def kurangiStok(request):
         b_db.save()
     return redirect('gudang')
 
-def tampilkan_tambah(request):
+def tampilkan_form_barang(request):
     nama = request.session.get('username')
     
     if not nama:
@@ -338,13 +304,119 @@ def tampilkan_tambah(request):
 
 
 #====================================LOGIKA TRANSAKSI===========================
+
 def tampilkan_transaksi(request):
+    nama = request.session.get('username')
+    if not nama: return redirect('login')
+    
+    tahun_saiki = datetime.now().strftime("%Y")
+    last_trx = TransaksiModel.objects.order_by('-id_transaksi').first()
+    new_id_num = (last_trx.id_transaksi + 1) if last_trx else 1
+    
+    context = {
+        'next_id': f"TRX-{tahun_saiki}{str(new_id_num).zfill(3)}",
+        'daftar_barang': BarangModel.objects.all() # PERBAIKAN: BarangModel
+    }
+    return render(request, 'menu_display/transaksi.html', context)
+
+def tambah_transaksi(request):
+    if request.method == "POST":
+        # 1. Inisialisasi Wrapper Transaksi
+        wrapper_trx = TransaksiClass(namaPembeli=request.POST.get('nama_pembeli'))
+        
+        # Ambil data dari form yang dikirimkan dan bentuknya List
+        barang_ids = request.POST.getlist('item_barang[]')
+        qtys = request.POST.getlist('item_qty[]')
+
+        # 2. Proses Barang satu per satu
+        for b_id, qty in zip(barang_ids, qtys):
+            if not b_id or not qty: 
+                continue
+            
+            # Ambil data dari Database
+            try:
+                b_db = BarangModel.objects.get(id=b_id)
+            except BarangModel.DoesNotExist:
+                continue
+
+            # Bungkus ke dalam BarangClass
+            wrap_barang = BarangClass(
+                ID=b_db.id, 
+                nama=b_db.nama, 
+                stok=b_db.stok, 
+                hargaBeli=b_db.hargabeli, 
+                hargaJual=b_db.hargajual
+            )
+            
+            # Buat Detail Transaksi Wrapper
+            wrap_detail = DetailTransaksiClass(barang_obj=wrap_barang, kuantitas=int(qty))
+            wrapper_trx.Pesanan(wrap_detail)
+            
+            # Kurangi Stok di Logic & Update ke DB
+            wrap_barang.kurangiStok(int(qty))
+            b_db.stok = wrap_barang.infoStok()
+            b_db.save()
+
+        # 3. Simpan Header Transaksi ke Database
+        new_trx_db = TransaksiModel.objects.create(
+            nama_pembeli=wrapper_trx.namaPembeli,
+            tanggal=datetime.now().date(),
+            total_harga=wrapper_trx.getTotalBayar(),
+            id_pegawai_id=request.session.get('ID')
+        )
+
+        # 4. Simpan Detail Transaksi ke Database (BAGIAN KRUSIAL)
+        for d in wrapper_trx.detailPesanan:
+            DetailModel.objects.create(
+                id_transaksi=new_trx_db,
+                id_barang_id=d.getBarang().ID,
+                jumlah=d.getKuantitas(),
+                # TAMBAHKAN HARGA SATUAN DI SINI BIAR GAK INTEGRITY ERROR
+                harga_satuan=d.getBarang().hargaJual, 
+                subtotal_harga=d.getSubTotal() 
+            )
+
+        return redirect('dashboard')
+        
+    return redirect('transaksi')
+
+
+def tampilkan_detail_transaksi(request, id_transaksi):
     nama = request.session.get('username')
     
     if not nama:
         return redirect('login')
     
-    return render(request, 'menu_display/transaksi.html')
+    transaksi_db = Transaksi.objects.get(id_transaksi=id_transaksi)
+    
+
+    
+    context = {
+        'transaksi': transaksi_db
+    }
+    
+    return render(request, 'menu_display/laporan.html', context)
+
+def hapus_detail_transaksi(request, id_transaksi):
+    pass
+
+#=============================================================================
+
+
+#====================================LOGIKA LAPORAN===========================
+
+def tampilkan_laporan(request):
+    nama = request.session.get('username')
+    
+    if not nama:
+        return redirect('login')
+    
+    return render(request, 'menu_display/laporan.html')
+
+
+#=============================================================================
+
+
 
 
 def tampilkan_settings(request):
@@ -363,14 +435,6 @@ def tampilkan_staff(request):
     
     return render(request, 'menu_display/staff.html')
 
-def tampilkan_laporan(request):
-    nama = request.session.get('username')
-    
-    if not nama:
-        return redirect('login')
-    
-    return render(request, 'menu_display/laporan.html')
-
 def tampilkan_manage(request):
     nama = request.session.get('username')
     
@@ -379,37 +443,6 @@ def tampilkan_manage(request):
     
     return render(request, 'menu_display/manage.html' )
 
-def tambah_transaksi(request):
-    if request.method == "POST":
-        # Ambil data dari form (perhatikan string di dalam .get)
-        nama_pembeli = request.POST.get('nama_pembeli')
-        tanggal_input = request.POST.get('tanggal')
-        total_input = request.POST.get('totalHarga')
-        id_pegawai_input = request.POST.get('id_pegawai')
-
-        # Simpan ke Database
-        Transaksi.objects.create(
-            nama_pembeli=nama_pembeli,
-            tanggal=tanggal_input,
-            total_harga=float(total_input),
-            id_pegawai_id=int(id_pegawai_input)  # Pastikan ini sesuai dengan ForeignKey di model
-        )
-
-def tampilkan_detail_transaksi(request, id_transaksi):
-    nama = request.session.get('username')
-    
-    if not nama:
-        return redirect('login')
-    
-    transaksi_db = Transaksi.objects.get(id_transaksi=id_transaksi)
-    
-
-    
-    context = {
-        'transaksi': transaksi_db
-    }
-    
-    return render(request, 'menu_display/laporan.html', context)
 
 
 

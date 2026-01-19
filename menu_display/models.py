@@ -56,19 +56,24 @@ class Rolestatus(models.Model):
 
 class Transaksi(models.Model):
     id_transaksi = models.AutoField(primary_key=True)
-    nama_pembeli = models.TextField(blank=True, null=True)
-    tanggal = models.DateField(blank=True, null=True)
-    total_harga = models.FloatField(db_column='totalHarga', blank=True, null=True)  # Field name made lowercase.
-    id_pegawai = models.ForeignKey(Pegawai, models.DO_NOTHING, db_column='id_pegawai', blank=True, null=True)
+    nama_pembeli = models.TextField()
+    tanggal = models.DateField(db_column='tanggal_transaksi') 
+    total_harga = models.FloatField(db_column='total_harga')
+    id_pegawai = models.ForeignKey(Pegawai, models.DO_NOTHING, db_column='id_pegawai')
 
     class Meta:
-        managed = False
-        db_table = 'Transaksi'
+        managed = False 
+        db_table = 'transaksi'
 
 class DetailTransaksi(models.Model):
     id_detail = models.AutoField(primary_key=True)
-    id_transaksi = models.ForeignKey(Transaksi, models.DO_NOTHING, db_column='id_transaksi', blank=True, null=True)
-    id_barang = models.ForeignKey(Barang, models.DO_NOTHING, db_column='id_barang', blank=True, null=True)
-    jumlah = models.IntegerField(blank=True, null=True)
-    subtotal_harga = models.FloatField(db_column='subtotalHarga', blank=True, null=True)  # Field name made lowercase.     
+    id_transaksi = models.ForeignKey(Transaksi, models.DO_NOTHING, db_column='id_transaksi')
+    id_barang = models.ForeignKey(Barang, models.DO_NOTHING, db_column='id_barang')
+    harga_satuan = models.FloatField(db_column='harga_satuan')
+    jumlah = models.IntegerField()
+    subtotal_harga = models.FloatField(db_column='subtotal') # Sesuaike karo jeneng 'subtotal' neng SQL
+
+    class Meta:
+        managed = False
+        db_table = 'detail_transaksi'     
     

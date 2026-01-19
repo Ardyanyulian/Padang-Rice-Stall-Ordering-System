@@ -85,7 +85,10 @@ def update_profile(request, ID):
 
 6. CARA RUNNING SERVER
 -------------------------------------------------------------------
-1. jika powershells Get-Content db_groceryStore.sql | main.db
+1. Eksekusi pertama :
+    - Powersheel : Get-Content db_groceryStore.sql | main.db 
+    - Ubuntu : sqlite3 db_groceryStore.db < db_groceryStore.sql
+    - Jika kedua ini error biasanya karena format db_groceryStore.sql antara utf-8 atau utf-16
 2. python manage.py makemigrations
 3. python manage.py migrate
 4. python manage.py runserver
